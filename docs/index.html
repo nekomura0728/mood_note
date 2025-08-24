@@ -4,106 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>きぶん日記 - 気分を記録するiOSアプリ</title>
-    <meta name="description" content="毎日の気分を簡単に記録できるiOSアプリ。プライバシー重視でデータは端末内に保存。">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="data:text/plain;base64,8J+YjA==" type="image/x-icon">
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <div class="header">
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">
-                    <span class="logo-icon">😌</span>
-                    <span data-key="appName">きぶん日記</span>
-                </a>
+                <a href="#" class="logo">😌 きぶん日記</a>
                 <button class="language-toggle">English</button>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- App Icon and Title -->
-            <div class="app-icon">😌</div>
-            <h1 data-key="title">きぶん日記</h1>
-            <p class="subtitle" data-key="subtitle">毎日の気分を記録して、心の健康をサポートするiOSアプリ</p>
+    <div class="container">
+        <!-- App Icon -->
+        <div class="app-icon">😌</div>
+        
+        <!-- Title -->
+        <h1>きぶん日記</h1>
+        <p class="subtitle">毎日の気分を記録して、心の健康をサポートするiOSアプリ</p>
 
-            <!-- Features Section -->
-            <section class="section">
-                <h2 data-key="featuresTitle">アプリの特徴</h2>
-                <ul class="features-list">
-                    <li class="feature-item">
-                        <span class="feature-icon">📝</span>
-                        <div class="feature-content">
-                            <h3 data-key="feature1Title">簡単な気分記録</h3>
-                            <p data-key="feature1Desc">5つの気分で日々の感情を素早く記録</p>
-                        </div>
-                    </li>
-                    <li class="feature-item">
-                        <span class="feature-icon">📊</span>
-                        <div class="feature-content">
-                            <h3 data-key="feature2Title">統計・分析</h3>
-                            <p data-key="feature2Desc">気分の変化をグラフで可視化</p>
-                        </div>
-                    </li>
-                    <li class="feature-item">
-                        <span class="feature-icon">🔒</span>
-                        <div class="feature-content">
-                            <h3 data-key="feature3Title">プライバシー重視</h3>
-                            <p data-key="feature3Desc">データは端末内にのみ保存</p>
-                        </div>
-                    </li>
-                </ul>
-            </section>
+        <!-- Features -->
+        <h2 id="features-title">アプリの特徴</h2>
+        <ul class="feature-list">
+            <li class="feature-item">
+                <div class="feature-title" id="feature1-title">📝 簡単な気分記録</div>
+                <div class="feature-desc" id="feature1-desc">5つの気分で日々の感情を素早く記録</div>
+            </li>
+            <li class="feature-item">
+                <div class="feature-title" id="feature2-title">📊 統計・分析</div>
+                <div class="feature-desc" id="feature2-desc">気分の変化をグラフで可視化</div>
+            </li>
+            <li class="feature-item">
+                <div class="feature-title" id="feature3-title">🔒 プライバシー重視</div>
+                <div class="feature-desc" id="feature3-desc">データは端末内にのみ保存</div>
+            </li>
+        </ul>
 
-            <!-- Pro Features Section -->
-            <section class="pro-section">
-                <div class="pro-badge" data-key="proBadge">Pro版限定</div>
-                <h2 data-key="proTitle">Pro版機能</h2>
-                <p data-key="proDesc">AIによるパーソナルコーチングと詳細な分析機能</p>
-                
-                <ul class="features-list" style="margin-top: 16px;">
-                    <li class="feature-item" style="background: white;">
-                        <span class="feature-icon">🧑‍⚕️</span>
-                        <div class="feature-content">
-                            <p data-key="proFeature1">パーソナルコーチング - 気分パターンを分析してアドバイス</p>
-                        </div>
-                    </li>
-                    <li class="feature-item" style="background: white;">
-                        <span class="feature-icon">📈</span>
-                        <div class="feature-content">
-                            <p data-key="proFeature2">詳細レポート - 長期間の傾向を詳細に分析</p>
-                        </div>
-                    </li>
-                </ul>
-                
-                <div class="price">
-                    <div class="price-amount" data-key="priceAmount">¥300</div>
-                    <div class="price-note" data-key="priceNote">買い切り価格</div>
-                </div>
-            </section>
-
-            <!-- Privacy Policy Link -->
-            <div class="privacy-link">
-                <a href="privacy.html" data-key="privacyLink">プライバシーポリシー</a>
-            </div>
-
-            <!-- Contact Section -->
-            <section class="contact-section">
-                <h2 data-key="contactTitle">お問い合わせ</h2>
-                <a href="mailto:nekomura@liz-aria.com" class="contact-email">nekomura@liz-aria.com</a>
-            </section>
+        <!-- Pro Features -->
+        <div class="pro-section">
+            <div class="pro-badge">Pro版限定</div>
+            <h2 id="pro-title">Pro版機能</h2>
+            <p id="pro-desc">AIによるパーソナルコーチングと詳細な分析機能</p>
+            
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div id="pro-feature1">🧑‍⚕️ パーソナルコーチング - 気分パターンを分析してアドバイス</div>
+                </li>
+                <li class="feature-item">
+                    <div id="pro-feature2">📈 詳細レポート - 長期間の傾向を詳細に分析</div>
+                </li>
+            </ul>
+            
+            <div class="price">¥300</div>
+            <div class="price-note">買い切り価格</div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p data-key="footer">© 2025 きぶん日記. All rights reserved.</p>
+        <!-- Privacy Link -->
+        <div class="privacy-link">
+            <a href="privacy.html">プライバシーポリシー</a>
         </div>
-    </footer>
+
+        <!-- Contact -->
+        <div class="contact">
+            <h2 id="contact-title">お問い合わせ</h2>
+            <a href="mailto:nekomura@liz-aria.com">nekomura@liz-aria.com</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">© 2025 きぶん日記. All rights reserved.</div>
+    </div>
 
     <script src="assets/js/script.js"></script>
 </body>

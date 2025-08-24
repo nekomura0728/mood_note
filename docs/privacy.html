@@ -4,58 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プライバシーポリシー - きぶん日記</title>
-    <meta name="description" content="きぶん日記のプライバシーポリシー">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="data:text/plain;base64,8J+YjA==" type="image/x-icon">
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <div class="header">
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">
-                    <span class="logo-icon">😌</span>
-                    <span data-key="appName">きぶん日記</span>
-                </a>
+                <a href="index.html" class="logo">😌 きぶん日記</a>
                 <button class="language-toggle">English</button>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container privacy-content">
-            <a href="index.html" class="back-button" data-key="backButton">← 戻る</a>
+    <div class="container">
+        <a href="index.html" class="back-button">← 戻る</a>
+        
+        <div class="privacy-content">
+            <h1 class="privacy-title">プライバシーポリシー</h1>
+            <p style="color: #666; margin-bottom: 30px;">最終更新日: 2025年8月24日</p>
             
-            <h1 data-key="privacyTitle">プライバシーポリシー</h1>
-            <p style="color: #86868b; margin-bottom: 32px;" data-key="lastUpdated">最終更新日: 2025年8月24日</p>
-            
-            <p data-key="intro">きぶん日記は、ユーザーのプライバシーを最優先に考えています。</p>
+            <p class="privacy-intro">きぶん日記は、ユーザーのプライバシーを最優先に考えています。</p>
 
-            <h2 data-key="dataCollection">収集するデータ</h2>
-            <p data-key="dataCollectionDesc">• 気分記録データ（気分の種類、記録日時）<br>• メモやコメント（任意）<br>• 通知設定</p>
+            <h2 class="data-title">収集するデータ</h2>
+            <p class="data-desc">気分記録データ、メモ、通知設定のみを収集します。</p>
 
-            <h2 data-key="dataUsage">データの利用</h2>
-            <p data-key="dataUsageDesc">収集したデータは気分の分析・表示、アプリの改善にのみ利用されます。</p>
+            <h2 class="storage-title">データの保存</h2>
+            <p class="storage-desc">すべてのデータはユーザーのデバイス内にのみ保存され、外部サーバーに送信されることはありません。</p>
 
-            <h2 data-key="dataStorage">データの保存</h2>
-            <p data-key="dataStorageDesc">すべてのデータはユーザーのデバイス内にのみ保存され、外部サーバーに送信されることはありません。</p>
+            <h2 class="thirdparty-title">第三者への提供</h2>
+            <p class="thirdparty-desc">法令に基づく場合を除き、個人情報を第三者に提供することはありません。</p>
 
-            <h2 data-key="thirdParty">第三者への提供</h2>
-            <p data-key="thirdPartyDesc">法令に基づく場合を除き、個人情報を第三者に提供することはありません。</p>
-
-            <h2 data-key="contact">お問い合わせ</h2>
-            <p data-key="contactDesc">ご質問がございましたら、以下までお問い合わせください：</p>
-            <p><a href="mailto:nekomura@liz-aria.com" class="contact-email" data-key="privacyContactEmail">nekomura@liz-aria.com</a></p>
+            <h2 id="contact-title">お問い合わせ</h2>
+            <p>ご質問がございましたら、以下までお問い合わせください：</p>
+            <p><a href="mailto:nekomura@liz-aria.com">nekomura@liz-aria.com</a></p>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p data-key="footer">© 2025 きぶん日記. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- Footer -->
+        <div class="footer">© 2025 きぶん日記. All rights reserved.</div>
+    </div>
 
     <script src="assets/js/script.js"></script>
 </body>

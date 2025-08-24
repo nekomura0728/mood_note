@@ -1,222 +1,167 @@
-/* Reset and Base Styles */
+/* Simple Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-    line-height: 1.7;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
     color: #333;
-    background-color: #ffffff;
+    background: #fff;
 }
 
-/* Container */
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 }
 
 /* Header */
 .header {
-    background: white;
-    border-bottom: 1px solid #e5e5e7;
-    padding: 16px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 30px;
 }
 
 .header-content {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 20px;
+    font-weight: bold;
     text-decoration: none;
     color: #333;
-    font-size: 18px;
-    font-weight: 600;
 }
 
-.logo-icon {
-    font-size: 24px;
-}
-
-/* Language Toggle */
 .language-toggle {
-    background: #f6f6f6;
+    background: #007AFF;
+    color: white;
     border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
+    padding: 8px 16px;
+    border-radius: 6px;
     font-size: 14px;
-    color: #333;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .language-toggle:hover {
-    background: #e5e5e7;
-}
-
-/* Main Content */
-.main-content {
-    padding: 40px 0;
+    background: #0056CC;
 }
 
 /* App Icon */
 .app-icon {
-    width: 100px;
-    height: 100px;
-    border-radius: 20px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    font-size: 60px;
+    text-align: center;
+    margin: 20px 0;
 }
 
 /* Typography */
 h1 {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 32px;
     text-align: center;
-    margin-bottom: 16px;
-    color: #1d1d1f;
-}
-
-h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 32px 0 16px 0;
-    color: #1d1d1f;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .subtitle {
-    font-size: 17px;
-    color: #86868b;
     text-align: center;
-    margin-bottom: 32px;
-    line-height: 1.5;
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 16px;
 }
 
-/* Sections */
-.section {
-    margin-bottom: 48px;
+h2 {
+    font-size: 24px;
+    margin: 30px 0 20px 0;
+    font-weight: bold;
 }
 
-/* Features List */
-.features-list {
+/* Features */
+.feature-list {
     list-style: none;
-    padding: 0;
+    margin: 20px 0;
 }
 
 .feature-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
     margin-bottom: 20px;
-    padding: 16px;
-    background: #fbfbfd;
-    border-radius: 12px;
-    border: 1px solid #f5f5f7;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
 }
 
-.feature-icon {
-    font-size: 20px;
-    line-height: 1;
-    margin-top: 2px;
+.feature-title {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.feature-content h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: #1d1d1f;
-}
-
-.feature-content p {
+.feature-desc {
+    color: #666;
     font-size: 14px;
-    color: #86868b;
-    line-height: 1.4;
 }
 
-/* Pro Features */
+/* Pro Section */
 .pro-section {
-    background: #f6f6f6;
-    border-radius: 12px;
-    padding: 24px;
-    margin: 24px 0;
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
 }
 
 .pro-badge {
-    display: inline-block;
     background: #007AFF;
     color: white;
     padding: 4px 12px;
-    border-radius: 16px;
+    border-radius: 12px;
     font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .price {
     text-align: center;
-    margin: 16px 0;
-    padding: 16px;
-    background: white;
-    border-radius: 8px;
-}
-
-.price-amount {
+    margin: 20px 0;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
     color: #007AFF;
 }
 
 .price-note {
     font-size: 14px;
-    color: #86868b;
-    margin-top: 4px;
+    color: #666;
+    text-align: center;
 }
 
 /* Contact */
-.contact-section {
+.contact {
     text-align: center;
-    padding: 32px 0;
-    border-top: 1px solid #f5f5f7;
-    margin-top: 48px;
+    margin: 40px 0;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
 }
 
-.contact-email {
+.contact a {
     color: #007AFF;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 16px;
 }
 
-.contact-email:hover {
+.contact a:hover {
     text-decoration: underline;
 }
 
-/* Privacy Link */
+/* Privacy */
 .privacy-link {
     text-align: center;
-    margin: 24px 0;
+    margin: 20px 0;
 }
 
 .privacy-link a {
     color: #007AFF;
     text-decoration: none;
-    font-size: 14px;
 }
 
 .privacy-link a:hover {
@@ -225,91 +170,56 @@ h2 {
 
 /* Footer */
 .footer {
-    border-top: 1px solid #f5f5f7;
-    padding: 32px 0;
     text-align: center;
-    color: #86868b;
-    font-size: 14px;
+    color: #999;
+    font-size: 12px;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
 }
 
-/* Privacy Policy Styles */
-.privacy-content {
-    max-width: 800px;
+/* Privacy Page */
+.privacy-content h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 .privacy-content h2 {
-    font-size: 18px;
-    margin-top: 32px;
-    margin-bottom: 12px;
-}
-
-.privacy-content h3 {
-    font-size: 16px;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    color: #515154;
+    font-size: 20px;
+    margin: 25px 0 10px 0;
 }
 
 .privacy-content p {
-    margin-bottom: 16px;
-    color: #515154;
+    margin-bottom: 15px;
     line-height: 1.6;
 }
 
-.privacy-content ul {
-    margin: 16px 0;
-    padding-left: 20px;
-}
-
-.privacy-content li {
-    margin-bottom: 8px;
-    color: #515154;
-}
-
-/* Back Button */
 .back-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
     color: #007AFF;
     text-decoration: none;
-    font-size: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    display: inline-block;
 }
 
 .back-button:hover {
     text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+/* Mobile Responsive */
+@media (max-width: 600px) {
     .container {
-        padding: 0 16px;
-    }
-    
-    .main-content {
-        padding: 24px 0;
+        padding: 15px;
     }
     
     h1 {
-        font-size: 24px;
-    }
-    
-    .subtitle {
-        font-size: 16px;
+        font-size: 28px;
     }
     
     .app-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 40px;
+        font-size: 50px;
     }
     
-    .feature-item {
-        padding: 12px;
-    }
-    
-    .pro-section {
-        padding: 20px;
+    .header-content {
+        flex-direction: row;
     }
 }
