@@ -2,6 +2,7 @@ import SwiftUI
 
 /// カレンダー表示画面
 struct CalendarView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var dataController = DataController.shared
     @State private var currentDate = Date()
     @State private var selectedDate: Date? = nil
@@ -13,7 +14,7 @@ struct CalendarView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 VStack(spacing: 20) {
                     // 月切り替えヘッダー
@@ -27,7 +28,7 @@ struct CalendarView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
             }
-            .navigationTitle("カレンダー")
+            .navigationTitle(LocalizedStringKey("calendar.title"))
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showDayDetail) {
                 dayDetailView
@@ -46,8 +47,11 @@ struct CalendarView: View {
                     .font(.title2)
                     .foregroundColor(.primary)
                     .frame(width: 44, height: 44)
-                    .background(Color.white.opacity(0.8))
-                    .clipShape(Circle())
+                    .background(
+                        Circle()
+                            .fill(Color(UIColor.systemBackground))
+                            .shadow(radius: 2)
+                    )
             }
             
             Spacer()
@@ -63,8 +67,11 @@ struct CalendarView: View {
                     .font(.title2)
                     .foregroundColor(.primary)
                     .frame(width: 44, height: 44)
-                    .background(Color.white.opacity(0.8))
-                    .clipShape(Circle())
+                    .background(
+                        Circle()
+                            .fill(Color(UIColor.systemBackground))
+                            .shadow(radius: 2)
+                    )
             }
         }
     }
@@ -99,9 +106,9 @@ struct CalendarView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -120,7 +127,7 @@ struct CalendarView: View {
                     
                     Spacer()
                     
-                    Button("閉じる") {
+                    Button(LocalizedStringKey("calendar.close")) {
                         showDayDetail = false
                     }
                     .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -136,7 +143,7 @@ struct CalendarView: View {
                         .font(.system(size: 40))
                         .foregroundColor(.secondary)
                     
-                    Text("この日の記録はありません")
+                    Text(LocalizedStringKey("calendar.no_record"))
                         .font(Theme.bodyFont)
                         .foregroundColor(.secondary)
                 }
@@ -156,37 +163,43 @@ struct CalendarView: View {
             
             Spacer()
         }
-        .background(Theme.gradientBackground.ignoresSafeArea())
+        .background(Theme.gradientBackground(for: colorScheme).ignoresSafeArea())
     }
     
     // MARK: - Computed Properties
     
     private var monthYearText: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
-        formatter.dateFormat = "yyyy年M月"
+        formatter.locale = Locale.current
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
         return formatter.string(from: currentDate)
     }
     
     private var weekdayHeaders: [String] {
-        return ["日", "月", "火", "水", "木", "金", "土"]
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        return formatter.shortWeekdaySymbols
     }
     
     private var calendarDays: [Date] {
         guard let monthRange = calendar.range(of: .day, in: .month, for: currentDate),
-              let firstOfMonth = calendar.dateInterval(of: .month, for: currentDate)?.start else {
+              let firstOfMonth = calendar.dateInterval(of: .month, for: currentDate)?.start,
+              monthRange.count > 0 && monthRange.count <= 31 else {
             return []
         }
         
         let firstWeekday = calendar.component(.weekday, from: firstOfMonth)
-        let daysFromPreviousMonth = (firstWeekday - 1) % 7
+        let daysFromPreviousMonth = max(0, (firstWeekday - 1) % 7)
         
         var days: [Date] = []
         
         // 前月の末尾日付を追加
-        for i in (1...daysFromPreviousMonth).reversed() {
-            if let date = calendar.date(byAdding: .day, value: -i, to: firstOfMonth) {
-                days.append(date)
+        if daysFromPreviousMonth > 0 {
+            for i in (1...daysFromPreviousMonth).reversed() {
+                if let date = calendar.date(byAdding: .day, value: -i, to: firstOfMonth) {
+                    days.append(date)
+                }
             }
         }
         
@@ -235,14 +248,15 @@ struct CalendarView: View {
     
     private func formatSelectedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         
         if calendar.isDateInToday(date) {
-            return "今日"
+            return NSLocalizedString("date.today", comment: "")
         } else if calendar.isDateInYesterday(date) {
-            return "昨日"
+            return NSLocalizedString("date.yesterday", comment: "")
         } else {
-            formatter.dateFormat = "M月d日(E)"
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
             return formatter.string(from: date)
         }
     }
@@ -250,6 +264,7 @@ struct CalendarView: View {
 
 /// カレンダー日付セルビュー
 struct CalendarDayView: View {
+    @Environment(\.colorScheme) private var colorScheme
     let date: Date
     let isCurrentMonth: Bool
     let isToday: Bool
@@ -298,7 +313,7 @@ struct CalendarDayView: View {
         if isToday {
             return Color.blue.opacity(0.1)
         } else if mood != nil {
-            return Color.moodColor(for: mood!).opacity(0.3)
+            return Color.moodColor(for: mood!, colorScheme: colorScheme).opacity(0.3)
         } else {
             return Color.clear
         }

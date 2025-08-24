@@ -2,30 +2,68 @@ import SwiftUI
 
 /// アプリのテーマ設定
 struct Theme {
-    /// パステルカラーパレット
+    /// パステルカラーパレット（ライトモード用）
     static let pastelPeach = Color(hex: "FFE5B4")
     static let pastelSkyBlue = Color(hex: "B4E5FF")
     static let pastelLavender = Color(hex: "E5D4FF")
     static let pastelCoral = Color(hex: "FFB4B4")
     static let pastelMint = Color(hex: "B4FFE5")
     
-    /// グラデーション背景
-    static let gradientBackground = LinearGradient(
-        gradient: Gradient(colors: [
-            Color(hex: "FFE5E5"),
-            Color(hex: "E5F3FF"),
-            Color(hex: "F0E5FF")
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
+    /// ダークモード用の深いカラー
+    static let darkPeach = Color(hex: "8B6B47")
+    static let darkSkyBlue = Color(hex: "4A7A8C")
+    static let darkLavender = Color(hex: "6B5B8C")
+    static let darkCoral = Color(hex: "8B4545")
+    static let darkMint = Color(hex: "4A8B70")
     
-    /// カード背景
-    static let cardBackground = Color.white.opacity(0.95)
+    /// グラデーション背景（動的）
+    static func gradientBackground(for colorScheme: ColorScheme) -> LinearGradient {
+        if colorScheme == .dark {
+            return LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(hex: "1A1A2E"),  // 深い紺
+                    Color(hex: "16213E"),  // 深い青
+                    Color(hex: "0F3460")   // ミッドナイトブルー
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        } else {
+            return LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(hex: "FFE5E5"),
+                    Color(hex: "E5F3FF"),
+                    Color(hex: "F0E5FF")
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+    }
     
-    /// 影の設定
+    /// カード背景（動的）
+    static func cardBackground(for colorScheme: ColorScheme) -> Color {
+        if colorScheme == .dark {
+            return Color(hex: "2C2C3E").opacity(0.95)
+        } else {
+            return Color.white.opacity(0.95)
+        }
+    }
+    
+    /// テキストの補助色（動的）
+    static func secondaryTextColor(for colorScheme: ColorScheme) -> Color {
+        if colorScheme == .dark {
+            return Color.white.opacity(0.7)
+        } else {
+            return Color.black.opacity(0.6)
+        }
+    }
+    
+    /// 影の設定（動的）
     static let cardShadowRadius: CGFloat = 8
-    static let cardShadowOpacity: Double = 0.1
+    static func cardShadowOpacity(for colorScheme: ColorScheme) -> Double {
+        return colorScheme == .dark ? 0.3 : 0.1
+    }
     
     /// コーナー半径
     static let cardCornerRadius: CGFloat = 20
@@ -68,9 +106,13 @@ extension Color {
         )
     }
     
-    /// Moodに対応したテーマカラーを取得
-    static func moodColor(for mood: Mood) -> Color {
-        Color(hex: mood.themeColor)
+    /// Moodに対応したテーマカラーを取得（ダークモード対応）
+    static func moodColor(for mood: Mood, colorScheme: ColorScheme) -> Color {
+        if colorScheme == .dark {
+            return Color(hex: mood.darkThemeColor)
+        } else {
+            return Color(hex: mood.themeColor)
+        }
     }
     
     /// 彩度を調整したColorを返す

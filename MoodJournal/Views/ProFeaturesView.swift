@@ -2,13 +2,14 @@ import SwiftUI
 
 /// Pro機能ハブ画面
 struct ProFeaturesView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var proManager = ProManager.shared
     @State private var showUpgradeSheet = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if proManager.isPro {
                     proFeaturesContent
@@ -16,7 +17,7 @@ struct ProFeaturesView: View {
                     upgradePromptContent
                 }
             }
-            .navigationTitle("Pro機能")
+            .navigationTitle("pro.title")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showUpgradeSheet) {
                 ProUpgradeView()
@@ -180,6 +181,7 @@ struct ProFeaturesView: View {
 
 /// Pro機能カード
 struct ProFeatureCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let feature: ProFeature
     let isUnlocked: Bool
     
@@ -239,9 +241,9 @@ struct ProFeatureCard: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )

@@ -3,6 +3,7 @@ import SwiftUI
 /// 記録画面
 struct RecordView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var dataController = DataController.shared
     
     @State private var selectedMood: Mood? = nil
@@ -33,7 +34,7 @@ struct RecordView: View {
                 .frame(minHeight: geometry.size.height)
             }
         }
-        .background(Theme.gradientBackground.ignoresSafeArea())
+        .background(Theme.gradientBackground(for: colorScheme).ignoresSafeArea())
         .animation(Theme.defaultAnimation, value: selectedMood)
         .overlay(
             // 成功フィードバック
@@ -45,11 +46,11 @@ struct RecordView: View {
     
     private var headerSection: some View {
         VStack(spacing: 12) {
-            Text("今日の気分")
+            Text(LocalizedStringKey("record.title"))
                 .font(Theme.titleFont)
                 .foregroundColor(.primary)
             
-            Text("スタンプを選んで気分を記録しましょう")
+            Text(LocalizedStringKey("record.subtitle"))
                 .font(Theme.bodyFont)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -58,7 +59,7 @@ struct RecordView: View {
     
     private var moodSelectionSection: some View {
         VStack(spacing: 20) {
-            Text("気分を選んでください")
+            Text(LocalizedStringKey("record.select_mood"))
                 .font(Theme.bodyFont)
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -79,9 +80,9 @@ struct RecordView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -92,7 +93,7 @@ struct RecordView: View {
     private var textInputSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("ひとこと（任意）")
+                Text(LocalizedStringKey("record.optional_note"))
                     .font(Theme.bodyFont)
                     .foregroundColor(.primary)
                 
@@ -109,7 +110,7 @@ struct RecordView: View {
                     .frame(minHeight: 100)
                 
                 if moodText.isEmpty && !textFieldFocused {
-                    Text("今日はどんな1日でしたか？")
+                    Text(LocalizedStringKey("record.placeholder"))
                         .font(Theme.bodyFont)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
@@ -134,9 +135,9 @@ struct RecordView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -150,7 +151,7 @@ struct RecordView: View {
                 Image(systemName: "plus.circle.fill")
                     .font(.title2)
                 
-                Text("記録する")
+                Text(LocalizedStringKey("record.save"))
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
             }
             .foregroundColor(.white)
@@ -162,10 +163,10 @@ struct RecordView: View {
                         selectedMood != nil
                         ? LinearGradient(
                             colors: [
-                                Color.moodColor(for: selectedMood!)
+                                Color.moodColor(for: selectedMood!, colorScheme: colorScheme)
                                     .adjustedSaturation(1.3)
                                     .opacity(0.9),
-                                Color.moodColor(for: selectedMood!)
+                                Color.moodColor(for: selectedMood!, colorScheme: colorScheme)
                                     .adjustedSaturation(1.5)
                                     .opacity(1.0)
                             ],
@@ -192,7 +193,7 @@ struct RecordView: View {
                         .font(.system(size: 60))
                         .foregroundColor(.green)
                     
-                    Text("記録しました！")
+                    Text(LocalizedStringKey("record.success"))
                         .font(Theme.titleFont)
                         .foregroundColor(.primary)
                     
@@ -204,7 +205,7 @@ struct RecordView: View {
                 .padding(40)
                 .background(
                     RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                        .fill(Theme.cardBackground)
+                        .fill(Theme.cardBackground(for: colorScheme))
                         .shadow(
                             color: .black.opacity(0.2),
                             radius: 20,

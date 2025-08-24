@@ -21,7 +21,7 @@ struct MoodTimelineProvider: TimelineProvider {
         let entry = MoodTimelineEntry(
             date: Date(),
             todayMood: Mood.happy,
-            todayText: "今日は素晴らしい1日でした！",
+            todayText: NSLocalizedString("widget.placeholder_text", comment: ""),
             timestamp: Date(),
             recentMoods: [Mood.happy, Mood.normal, Mood.tired, Mood.angry, Mood.sleepy, Mood.happy, Mood.normal]
         )

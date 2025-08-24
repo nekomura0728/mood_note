@@ -2,6 +2,7 @@ import SwiftUI
 
 /// エントリーカードコンポーネント
 struct EntryCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let entry: MoodEntry
     let showDate: Bool
     
@@ -20,7 +21,7 @@ struct EntryCard: View {
                         .frame(width: 44, height: 44)
                         .background(
                             Circle()
-                                .fill(Color.moodColor(for: mood))
+                                .fill(Color.moodColor(for: mood, colorScheme: colorScheme))
                                 .opacity(0.3)
                         )
                     
@@ -33,6 +34,13 @@ struct EntryCard: View {
             
             // テキストコンテンツ（シンプルに）
             VStack(alignment: .leading, spacing: 6) {
+                // 日付表示（タイムラインでのみ）
+                if showDate {
+                    Text(entry.formattedDate)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
+                
                 // テキスト
                 if let text = entry.text, !text.isEmpty {
                     Text(text)
@@ -56,9 +64,9 @@ struct EntryCard: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2

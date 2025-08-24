@@ -1,0 +1,175 @@
+/* Main Navigation */
+"tab.record" = "記録";
+"tab.timeline" = "タイムライン";
+"tab.calendar" = "カレンダー";
+"tab.statistics" = "レポート";
+"tab.settings" = "設定";
+
+/* Record View */
+"record.title" = "今日の気分";
+"record.subtitle" = "スタンプを選んで気分を記録しましょう";
+"record.select_mood" = "気分を選択";
+"record.optional_note" = "メモ（任意）";
+"record.placeholder" = "今日はどんな日でしたか？（任意）";
+"record.save" = "保存";
+"record.success" = "記録しました！";
+"record.today_mood" = "今日の気分";
+
+/* Mood Types */
+"mood.happy" = "うれしい";
+"mood.normal" = "ふつう";
+"mood.tired" = "つかれた";
+"mood.angry" = "イライラ";
+"mood.sleepy" = "ねむい";
+
+/* Timeline View */
+"timeline.title" = "タイムライン";
+"timeline.no_entries" = "まだ記録がありません";
+"timeline.entry_count" = "%d件の記録";
+"timeline.today" = "今日";
+"timeline.yesterday" = "昨日";
+
+/* Calendar View */
+"calendar.title" = "カレンダー";
+"calendar.no_record" = "この日の記録はありません";
+"calendar.close" = "閉じる";
+
+/* Statistics/Reports */
+"statistics.title" = "レポート";
+"statistics.calculating" = "統計を計算中...";
+"statistics.period" = "期間";
+"statistics.overview" = "記録概要";
+"statistics.total_entries" = "総記録数";
+"statistics.record_days" = "記録日数";
+"statistics.entries_unit" = "件";
+"statistics.days_unit" = "日";
+"statistics.most_frequent_mood" = "最も多い気分";
+"statistics.times_format" = "%d回";
+"statistics.mood_distribution" = "きぶん分布";
+"statistics.count_percentage_format" = "%d回 (%.1f%%)";
+"statistics.no_data" = "統計データがありません";
+"statistics.no_data_description" = "気分を記録すると\n統計が表示されます";
+"statistics.pro_required_description" = "詳細レポートをご覧いただくには\nPro版へのアップグレードが必要です";
+"statistics.upgrade_to_pro" = "Pro版にアップグレード";
+"statistics.recommended" = "おすすめ";
+"statistics.period.week" = "1週間";
+"statistics.period.month" = "1ヶ月";
+"statistics.period.three_months" = "3ヶ月";
+"statistics.period.year" = "1年";
+"statistics.pro_required" = "Pro版が必要です";
+"statistics.personal_coaching" = "パーソナルコーチング";
+"statistics.detailed_reports" = "詳細レポート";
+
+/* Personal Coaching */
+"coaching.title" = "パーソナルコーチング";
+"coaching.description" = "気分パターンを分析し、\n具体的なアドバイスを提供します";
+"coaching.analyzing" = "分析中...";
+"coaching.no_data" = "分析に必要なデータが不足しています。\n1週間以上記録を続けてください。";
+
+/* Pro Version View */
+"pro.features_title" = "Pro版の機能";
+"pro.upgrade_title" = "Pro版にアップグレード";
+"pro.personal_coaching_title" = "パーソナルコーチング";
+"pro.personal_coaching_desc" = "気分パターンと時間帯を分析し、具体的なアドバイスを提供";
+"pro.detailed_reports" = "詳細レポート";
+"pro.detailed_reports_desc" = "長期間の気分傾向を詳細に分析・可視化";
+"pro.subtitle" = "パーソナルコーチと詳細レポートで気分を深く理解";
+"pro.error" = "エラー";
+"pro.purchase_button_purchasing" = "購入中...";
+"pro.one_time_purchase" = "買い切り価格";
+"pro.forever_use" = "一度購入すれば永続利用可能";
+"pro.loading_product_info" = "商品情報を読み込み中...";
+"pro.reload" = "再読み込み";
+"pro.restore_purchase" = "購入を復元";
+"pro.already_purchased" = "既に購入済みの場合はこちら";
+"pro.debug_price_jp" = "¥300";
+"pro.debug_price_en" = "$1.99";
+"pro.purchase_button_purchased" = "購入済み";
+"pro.purchase_button_restored" = "復元済み";
+
+/* Settings */
+"settings.title" = "設定";
+"settings.pro_section" = "Pro版";
+"settings.pro_upgrade" = "Pro版にアップグレード";
+"settings.pro_active" = "Pro版 利用中";
+"settings.pro_features" = "パーソナルコーチング、詳細レポート";
+"settings.pro_price" = "¥300買い切り";
+"settings.notifications" = "通知";
+"settings.daily_reminder" = "毎日のリマインダー";
+"settings.reminder_description" = "気分記録を忘れないようにお知らせします";
+"settings.notification_time" = "通知時刻";
+"settings.change" = "変更";
+"settings.notification_disabled" = "通知が無効になっています";
+"settings.open_settings" = "設定を開く";
+"settings.app_info" = "アプリについて";
+"settings.privacy_policy" = "プライバシーポリシー";
+"settings.data_protection" = "データ保護について";
+"settings.version" = "Version 1.0.0";
+
+/* Debug Settings */
+"debug.section" = "🛠️ デバッグ機能";
+"debug.pro_status" = "Pro版ステータス";
+"debug.pro_toggle" = "シミュレーター用デバッグ機能";
+"debug.japanese_sample" = "日本語サンプルデータ追加";
+"debug.english_sample" = "English Sample Data";
+"debug.japanese_description" = "スクリーンショット用日本語データ";
+"debug.english_description" = "Sample data for English screenshots";
+"debug.footer" = "シミュレーターでPro機能をテストできます。";
+
+/* Pro Version */
+"pro.title" = "きぶん日記 Pro";
+"pro.subtitle" = "より詳しく気分を理解し、\n自分と向き合うためのツールを解放します";
+"pro.one_time" = "買い切り";
+"pro.no_subscription" = "月額課金なし・追加料金なし";
+"pro.purchase" = "購入する";
+"pro.restore" = "購入を復元";
+"pro.restore_description" = "購入に問題がある場合は復元をお試しください";
+"pro.loading" = "商品情報読込中...";
+
+/* Pro Required */
+"pro_required.title" = "Pro版限定機能";
+"pro_required.description" = "この機能をご利用いただくには\nPro版へのアップグレードが必要です";
+"pro_required.upgrade" = "Pro版にアップグレード";
+"pro_required.one_time_price" = "買い切り価格でずっと使える";
+"pro_required.detailed_analytics" = "詳細な統計分析";
+"pro_required.detailed_analytics_desc" = "気分の変化を期間別にグラフで確認";
+"pro_required.csv_export" = "CSVエクスポート";
+"pro_required.csv_export_desc" = "データを外部アプリで分析可能";
+"pro_required.additional_themes" = "追加テーマ";
+"pro_required.additional_themes_desc" = "お好みの色合いでカスタマイズ";
+
+/* Time Picker */
+"time_picker.title" = "通知時刻を設定";
+"time_picker.done" = "完了";
+
+/* Notifications */
+"notification.reminder_title" = "気分記録のリマインダー";
+"notification.reminder_body" = "今日の気分はいかがですか？";
+
+/* Common */
+"common.cancel" = "キャンセル";
+"common.done" = "完了";
+"common.save" = "保存";
+"common.delete" = "削除";
+"common.edit" = "編集";
+"common.ok" = "OK";
+"common.back" = "戻る";
+"common.next" = "次へ";
+"common.previous" = "前へ";
+
+/* Date Formats */
+"date.today" = "今日";
+"date.yesterday" = "昨日";
+
+/* Widget */
+"widget.home.title" = "きぶん日記";
+"widget.home.description" = "直近の気分記録を表示します";
+"widget.lock.title" = "今日の気分";
+"widget.lock.description" = "今日の気分記録状況を表示します";
+"widget.today_prefix" = "今日は";
+"widget.record_prompt" = "記録しましょう";
+"widget.recent_days" = "直近7日間";
+"widget.no_record" = "今日はまだ未記録";
+"widget.time_unknown" = "時刻不明";
+"widget.sample_text" = "良い1日でした";
+"widget.placeholder_text" = "今日はとても良い1日でした！";

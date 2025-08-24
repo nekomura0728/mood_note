@@ -3,6 +3,7 @@ import StoreKit
 
 /// Pro版アップグレード画面
 struct ProUpgradeView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var proManager = ProManager.shared
     @Environment(\.dismiss) private var dismiss
     @State private var isPurchasing = false
@@ -12,7 +13,7 @@ struct ProUpgradeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 ScrollView {
                     VStack(spacing: 30) {
@@ -32,7 +33,7 @@ struct ProUpgradeView: View {
                     .padding(.vertical, 20)
                 }
             }
-            .navigationTitle("Pro版にアップグレード")
+            .navigationTitle("pro.upgrade_title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -117,9 +118,9 @@ struct ProUpgradeView: View {
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                    .fill(Theme.cardBackground)
+                    .fill(Theme.cardBackground(for: colorScheme))
                     .shadow(
-                        color: .black.opacity(Theme.cardShadowOpacity),
+                        color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                         radius: Theme.cardShadowRadius,
                         x: 0, y: 2
                     )
@@ -227,6 +228,7 @@ struct ProUpgradeView: View {
 
 /// 機能カードコンポーネント
 struct FeatureCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let feature: ProFeature
     
     var body: some View {
@@ -258,9 +260,9 @@ struct FeatureCard: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )

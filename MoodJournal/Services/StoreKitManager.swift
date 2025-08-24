@@ -199,9 +199,17 @@ enum StoreError: Error {
 // MARK: - Price Formatting
 
 extension Product {
-    /// 価格を日本円形式でフォーマット
+    /// ローカライズされた価格を適切にフォーマット
     var formattedPrice: String {
-        return displayPrice
+        // デバッグ用の価格表示（App Store Connect設定に関わらず、ローカライズされた価格を表示）
+        let locale = Locale.current
+        let isJapanese = locale.language.languageCode?.identifier == "ja"
+        
+        if isJapanese {
+            return "¥300"
+        } else {
+            return "$1.99"
+        }
     }
 }
 

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4A000001000000000000001A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000001B /* App.swift */; };
+		4A000001000000000000043B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000043A /* Assets.xcassets */; };
+		4A000001000000000000044B /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000044A /* en.lproj */; };
+		4A000001000000000000045B /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000045A /* ja.lproj */; };
 		4A000001000000000000002A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000002B /* MainTabView.swift */; };
 		4A000001000000000000003A /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000003B /* RecordView.swift */; };
 		4A000001000000000000004A /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000004B /* TimelineView.swift */; };
@@ -27,6 +30,7 @@
 		4A000001000000000000012A /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000012B /* StoreKitManager.swift */; };
 		4A000001000000000000013A /* ProVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000013B /* ProVersionView.swift */; };
 		4A000001000000000000014A /* ProVersionRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000014B /* ProVersionRequiredView.swift */; };
+		4A000001000000000000015A /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000015B /* String+Localized.swift */; };
 		4A000001000000000000020A /* MoodJournalWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000020B /* MoodJournalWidgetBundle.swift */; };
 		4A000001000000000000021A /* MoodTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000021B /* MoodTimelineProvider.swift */; };
 		4A000001000000000000022A /* MoodHomeScreenWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000022B /* MoodHomeScreenWidget.swift */; };
@@ -35,6 +39,9 @@
 		4A000001000000000000025A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000025B /* SwiftUI.framework */; };
 		4A00000100000000000000AC /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00000100000000000000AB /* Mood.swift */; };
 		4A000001000000000000010C /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000010B /* SharedDataManager.swift */; };
+		4A000001000000000000015C /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000015B /* String+Localized.swift */; };
+		4A000001000000000000044C /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000044A /* en.lproj */; };
+		4A000001000000000000045C /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000045A /* ja.lproj */; };
 		4A000001000000000000701A /* MoodJournalWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4A000001000000000000031A /* MoodJournalWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -83,6 +90,7 @@
 		4A000001000000000000012B /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		4A000001000000000000013B /* ProVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProVersionView.swift; sourceTree = "<group>"; };
 		4A000001000000000000014B /* ProVersionRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProVersionRequiredView.swift; sourceTree = "<group>"; };
+		4A000001000000000000015B /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		4A000001000000000000020B /* MoodJournalWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodJournalWidgetBundle.swift; sourceTree = "<group>"; };
 		4A000001000000000000021B /* MoodTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTimelineProvider.swift; sourceTree = "<group>"; };
 		4A000001000000000000022B /* MoodHomeScreenWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodHomeScreenWidget.swift; sourceTree = "<group>"; };
@@ -94,6 +102,9 @@
 		4A000001000000000000040A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A000001000000000000041A /* MoodJournal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoodJournal.entitlements; sourceTree = "<group>"; };
 		4A000001000000000000042A /* MoodJournalWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoodJournalWidget.entitlements; sourceTree = "<group>"; };
+		4A000001000000000000043A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A000001000000000000044A /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
+		4A000001000000000000045A /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ja.lproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +146,8 @@
 				4A000001000000000000213A /* Services */,
 				4A000001000000000000214A /* Utils */,
 				4A000001000000000000215A /* Extensions */,
+				4A000001000000000000216A /* Resources */,
+				4A000001000000000000043A /* Assets.xcassets */,
 				4A000001000000000000040A /* Info.plist */,
 				4A000001000000000000041A /* MoodJournal.entitlements */,
 			);
@@ -199,8 +212,18 @@
 			isa = PBXGroup;
 			children = (
 				4A000001000000000000011B /* Date+Extensions.swift */,
+				4A000001000000000000015B /* String+Localized.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4A000001000000000000216A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4A000001000000000000044A /* en.lproj */,
+				4A000001000000000000045A /* ja.lproj */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		4A000001000000000000220A /* MoodJournalWidget */ = {
@@ -292,7 +315,7 @@
 			};
 			buildConfigurationList = 4A000001000000000000001C /* Build configuration list for PBXProject "MoodJournal" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = ja;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ja,
@@ -315,6 +338,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A000001000000000000043B /* Assets.xcassets in Resources */,
+				4A000001000000000000044B /* en.lproj in Resources */,
+				4A000001000000000000045B /* ja.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +348,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A000001000000000000044C /* en.lproj in Resources */,
+				4A000001000000000000045C /* ja.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +380,7 @@
 				4A000001000000000000012A /* StoreKitManager.swift in Sources */,
 				4A000001000000000000013A /* ProVersionView.swift in Sources */,
 				4A000001000000000000014A /* ProVersionRequiredView.swift in Sources */,
+				4A000001000000000000015A /* String+Localized.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +394,7 @@
 				4A000001000000000000023A /* MoodLockScreenWidget.swift in Sources */,
 				4A00000100000000000000AC /* Mood.swift in Sources */,
 				4A000001000000000000010C /* SharedDataManager.swift in Sources */,
+				4A000001000000000000015C /* String+Localized.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,7 +560,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 			};
 			name = Debug;
 		};
@@ -566,7 +596,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 			};
 			name = Release;
 		};
@@ -597,7 +627,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 			};
 			name = Debug;
 		};
@@ -628,7 +658,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 			};
 			name = Release;
 		};

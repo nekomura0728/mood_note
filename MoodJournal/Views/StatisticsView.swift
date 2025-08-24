@@ -3,6 +3,7 @@ import UIKit
 
 /// 統計画面（Pro版機能）
 struct StatisticsView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var dataController = DataController.shared
     @StateObject private var proManager = ProManager.shared
     @State private var selectedPeriod: StatisticsPeriod = .month
@@ -13,18 +14,18 @@ struct StatisticsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if !proManager.isPro {
                     proUpgradeView
                 } else if isLoading {
-                    ProgressView("統計を計算中...")
+                    ProgressView(NSLocalizedString("statistics.calculating", comment: ""))
                         .progressViewStyle(CircularProgressViewStyle())
                 } else {
                     scrollContent
                 }
             }
-            .navigationTitle("レポート")
+            .navigationTitle(LocalizedStringKey("statistics.title"))
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 loadStatistics()
@@ -60,7 +61,7 @@ struct StatisticsView: View {
     }
     
     private var periodSelector: some View {
-        Picker("期間", selection: $selectedPeriod) {
+        Picker(NSLocalizedString("statistics.period", comment: ""), selection: $selectedPeriod) {
             ForEach(StatisticsPeriod.allCases, id: \.self) { period in
                 Text(period.displayName)
                     .tag(period)
@@ -76,7 +77,7 @@ struct StatisticsView: View {
     private var overviewSection: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("記録概要")
+                Text(NSLocalizedString("statistics.overview", comment: ""))
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                 Spacer()
             }
@@ -84,17 +85,17 @@ struct StatisticsView: View {
             HStack(spacing: 20) {
                 // 総記録数
                 StatCard(
-                    title: "総記録数",
+                    title: NSLocalizedString("statistics.total_entries", comment: ""),
                     value: "\(totalEntries)",
-                    subtitle: "件",
+                    subtitle: NSLocalizedString("statistics.entries_unit", comment: ""),
                     color: .blue
                 )
                 
                 // 記録日数
                 StatCard(
-                    title: "記録日数",
+                    title: NSLocalizedString("statistics.record_days", comment: ""),
                     value: "\(uniqueDaysCount)",
-                    subtitle: "日",
+                    subtitle: NSLocalizedString("statistics.days_unit", comment: ""),
                     color: .green
                 )
             }
@@ -102,7 +103,7 @@ struct StatisticsView: View {
             // 最多気分
             if let mostFrequentMood = mostFrequentMood {
                 HStack {
-                    Text("最も多い気分")
+                    Text(NSLocalizedString("statistics.most_frequent_mood", comment: ""))
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                     
                     Spacer()
@@ -115,7 +116,7 @@ struct StatisticsView: View {
                             Text(mostFrequentMood.displayName)
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
                             
-                            Text("\(moodStatistics[mostFrequentMood] ?? 0)回")
+                            Text(String.localizedStringWithFormat(NSLocalizedString("statistics.times_format", comment: ""), moodStatistics[mostFrequentMood] ?? 0))
                                 .font(.system(size: 12, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -124,16 +125,16 @@ struct StatisticsView: View {
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                        .fill(Color.moodColor(for: mostFrequentMood).opacity(0.1))
+                        .fill(Color.moodColor(for: mostFrequentMood, colorScheme: colorScheme).opacity(0.1))
                 )
             }
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -143,7 +144,7 @@ struct StatisticsView: View {
     
     private var moodDistributionChart: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("気分分布")
+            Text(NSLocalizedString("statistics.mood_distribution", comment: ""))
                 .font(.system(size: 18, weight: .bold, design: .rounded))
             
             // 簡易円グラフ（Chartsの代替）
@@ -156,7 +157,7 @@ struct StatisticsView: View {
                             let percentage = Double(count) / Double(totalEntries)
                             Circle()
                                 .trim(from: 0, to: percentage)
-                                .stroke(Color.moodColor(for: mood), lineWidth: 20)
+                                .stroke(Color.moodColor(for: mood, colorScheme: colorScheme), lineWidth: 20)
                                 .frame(width: 120, height: 120)
                                 .rotationEffect(.degrees(-90))
                         }
@@ -177,7 +178,7 @@ struct StatisticsView: View {
                         if count > 0 {
                             HStack(spacing: 8) {
                                 Circle()
-                                    .fill(Color.moodColor(for: mood))
+                                    .fill(Color.moodColor(for: mood, colorScheme: colorScheme))
                                     .frame(width: 12, height: 12)
                                 
                                 Text(mood.displayName)
@@ -197,9 +198,9 @@ struct StatisticsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -209,7 +210,7 @@ struct StatisticsView: View {
     
     private var detailedStatistics: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("きぶん分布")
+            Text(NSLocalizedString("statistics.mood_distribution", comment: ""))
                 .font(.system(size: 18, weight: .bold, design: .rounded))
             
             VStack(spacing: 12) {
@@ -226,7 +227,7 @@ struct StatisticsView: View {
                             Text(mood.displayName)
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
                             
-                            Text("\(count)回 (\(String(format: "%.1f", percentage))%)")
+                            Text(String.localizedStringWithFormat(NSLocalizedString("statistics.count_percentage_format", comment: ""), count, String(format: "%.1f", percentage)))
                                 .font(.system(size: 12, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -235,7 +236,7 @@ struct StatisticsView: View {
                         
                         // プログレスバー
                         ProgressView(value: percentage, total: 100)
-                            .progressViewStyle(LinearProgressViewStyle(tint: Color.moodColor(for: mood)))
+                            .progressViewStyle(LinearProgressViewStyle(tint: Color.moodColor(for: mood, colorScheme: colorScheme)))
                             .frame(width: 80)
                     }
                 }
@@ -244,9 +245,9 @@ struct StatisticsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -260,11 +261,11 @@ struct StatisticsView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.secondary)
             
-            Text("統計データがありません")
+            Text(NSLocalizedString("statistics.no_data", comment: ""))
                 .font(Theme.titleFont)
                 .foregroundColor(.primary)
             
-            Text("気分を記録すると\n統計が表示されます")
+            Text(NSLocalizedString("statistics.no_data_description", comment: ""))
                 .font(Theme.bodyFont)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -273,20 +274,58 @@ struct StatisticsView: View {
     }
     
     private var proUpgradeView: some View {
-        LazyVStack {
-            EmptyView()
-        }
-        .onAppear {
-            // 設定画面に遷移
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                   let window = windowScene.windows.first {
-                    if let tabBarController = window.rootViewController as? UITabBarController {
-                        tabBarController.selectedIndex = 2 // 設定タブ
-                    }
+        VStack(spacing: 40) {
+            Spacer()
+            
+            VStack(spacing: 20) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 60))
+                    .foregroundColor(.orange)
+                
+                VStack(spacing: 12) {
+                    Text(NSLocalizedString("statistics.pro_required", comment: ""))
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundColor(.primary)
+                    
+                    Text(NSLocalizedString("statistics.pro_required_description", comment: ""))
+                        .font(.system(size: 16, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
                 }
             }
+            
+            VStack(spacing: 16) {
+                NavigationLink(destination: ProVersionView()) {
+                    HStack {
+                        Image(systemName: "crown.fill")
+                            .foregroundColor(.white)
+                        Text(NSLocalizedString("statistics.upgrade_to_pro", comment: ""))
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        LinearGradient(
+                            colors: [Color.orange, Color.red],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                Text(NSLocalizedString("settings.pro_price", comment: ""))
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
+            .padding(.horizontal, 40)
+            
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(UIColor.systemGroupedBackground))
     }
     
     // MARK: - Pro Features
@@ -299,12 +338,12 @@ struct StatisticsView: View {
                     .font(.system(size: 20))
                     .foregroundColor(.green)
                 
-                Text("パーソナルコーチング")
+                Text(NSLocalizedString("statistics.personal_coaching", comment: ""))
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                 
                 Spacer()
                 
-                Text("おすすめ")
+                Text(NSLocalizedString("statistics.recommended", comment: ""))
                     .font(.system(size: 12, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.horizontal, 8)
@@ -322,9 +361,9 @@ struct StatisticsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -370,8 +409,20 @@ struct StatisticsView: View {
         
         let totalEntries = allEntries.count
         guard totalEntries > 0 else {
-            return "十分なデータがありません。気分を記録し続けることで、より詳細な分析を提供できます。"
+            return NSLocalizedString("coaching.no_data", comment: "")
         }
+        
+        // ロケールを確認して言語を選択
+        let isEnglish = Locale.current.language.languageCode?.identifier == "en"
+        
+        if isEnglish {
+            return generateEnglishPersonalCoaching(entries: allEntries, totalEntries: totalEntries)
+        } else {
+            return generateJapanesePersonalCoaching(entries: allEntries, totalEntries: totalEntries)
+        }
+    }
+    
+    private func generateJapanesePersonalCoaching(entries allEntries: [MoodEntry], totalEntries: Int) -> String {
         
         // 基本的な気分統計
         let happyCount = allEntries.filter { $0.moodEnum == .happy }.count
@@ -436,6 +487,74 @@ struct StatisticsView: View {
         
         // 継続性への言及
         coaching += generateContinuityMessage(totalEntries: totalEntries)
+        
+        return coaching
+    }
+    
+    private func generateEnglishPersonalCoaching(entries allEntries: [MoodEntry], totalEntries: Int) -> String {
+        // Basic mood statistics
+        let happyCount = allEntries.filter { $0.moodEnum == .happy }.count
+        let normalCount = allEntries.filter { $0.moodEnum == .normal }.count
+        let tiredCount = allEntries.filter { $0.moodEnum == .tired }.count
+        let angryCount = allEntries.filter { $0.moodEnum == .angry }.count
+        let sleepyCount = allEntries.filter { $0.moodEnum == .sleepy }.count
+        
+        let happyRatio = Double(happyCount) / Double(totalEntries)
+        let tiredRatio = Double(tiredCount) / Double(totalEntries)
+        let angryRatio = Double(angryCount) / Double(totalEntries)
+        let sleepyRatio = Double(sleepyCount) / Double(totalEntries)
+        let normalRatio = Double(normalCount) / Double(totalEntries)
+        
+        // Time pattern analysis
+        let timePatterns = analyzeTimePatterns(entries: allEntries)
+        
+        // Text analysis
+        let textInsights = analyzeTextContent(entries: allEntries)
+        
+        var coaching = ""
+        
+        // Current status analysis
+        coaching += "【Mood Pattern Analysis】\n"
+        coaching += generateEnglishMoodAnalysis(
+            happyRatio: happyRatio,
+            tiredRatio: tiredRatio,
+            angryRatio: angryRatio,
+            sleepyRatio: sleepyRatio,
+            normalRatio: normalRatio,
+            timePatterns: timePatterns,
+            textInsights: textInsights
+        )
+        
+        // Time-based insights
+        if !timePatterns.insights.isEmpty {
+            coaching += "\n【Time Patterns】\n"
+            for insight in timePatterns.insights {
+                coaching += "• \(translateInsightToEnglish(insight))\n"
+            }
+        }
+        
+        // Text analysis insights
+        if !textInsights.insights.isEmpty {
+            coaching += "\n【Content Analysis Insights】\n"
+            for insight in textInsights.insights {
+                coaching += "• \(translateInsightToEnglish(insight))\n"
+            }
+        }
+        
+        // Improvement suggestions
+        coaching += "\n【Action Items】\n"
+        let contextualAdvice = generateEnglishContextualAdvice(
+            moodRatios: (happyRatio, tiredRatio, angryRatio, sleepyRatio, normalRatio),
+            timePatterns: timePatterns,
+            textInsights: textInsights
+        )
+        
+        for (index, advice) in contextualAdvice.enumerated() {
+            coaching += "\(index + 1). \(advice)\n"
+        }
+        
+        // Continuity message
+        coaching += generateEnglishContinuityMessage(totalEntries: totalEntries)
         
         return coaching
     }
@@ -650,6 +769,116 @@ struct StatisticsView: View {
         }
     }
     
+    // MARK: - English Analysis Functions
+    
+    private func generateEnglishMoodAnalysis(happyRatio: Double, tiredRatio: Double, angryRatio: Double, sleepyRatio: Double, normalRatio: Double, timePatterns: TimePatterns, textInsights: TextInsights) -> String {
+        var analysis = ""
+        
+        if happyRatio > 0.6 {
+            analysis += "You're maintaining excellent mental well-being (\\(String(format: \"%.0f\", happyRatio * 100))% positive moods). "
+        } else if happyRatio > 0.3 && normalRatio > 0.4 {
+            analysis += "You're maintaining stable moods with moderate positive moments. "
+        } else if tiredRatio > 0.4 {
+            analysis += "Fatigue is prominent in your records (\\(String(format: \"%.0f\", tiredRatio * 100))%). "
+            if timePatterns.morningMood == .tired || timePatterns.morningMood == .sleepy {
+                analysis += "Morning fatigue is particularly noticeable, suggesting potential sleep quality issues. "
+            }
+        } else if angryRatio > 0.3 {
+            analysis += "Stress factors are frequently observed (\\(String(format: \"%.0f\", angryRatio * 100))% stress-related). "
+        } else if sleepyRatio > 0.4 {
+            analysis += "Sleep issues are prominent (\\(String(format: \"%.0f\", sleepyRatio * 100))%). "
+        } else {
+            analysis += "Various mood changes are observed throughout your records. "
+        }
+        
+        return analysis + "\\n"
+    }
+    
+    private func generateEnglishContextualAdvice(moodRatios: (Double, Double, Double, Double, Double), timePatterns: TimePatterns, textInsights: TextInsights) -> [String] {
+        let (happyRatio, tiredRatio, angryRatio, sleepyRatio, normalRatio) = moodRatios
+        var advice: [(priority: Int, text: String)] = []
+        
+        // Sleep issues
+        if sleepyRatio > 0.3 || tiredRatio > 0.4 || timePatterns.morningMood == .tired {
+            if timePatterns.morningMood == .tired {
+                advice.append((priority: 10, text: "Morning fatigue is evident. Try going to bed 1 hour earlier and optimize your sleep environment"))
+            } else {
+                advice.append((priority: 10, text: "Ensure 7-8 hours of sleep and avoid screens 2 hours before bedtime"))
+            }
+        }
+        
+        // Stress management
+        if angryRatio > 0.25 {
+            let hasWorkStress = textInsights.stressIndicators.keys.contains { ["work", "busy", "deadline", "meeting"].contains($0) }
+            if hasWorkStress {
+                advice.append((priority: 8, text: "Work-related stress is apparent. Focus on task prioritization and taking appropriate breaks"))
+            } else {
+                advice.append((priority: 8, text: "Practice 10 minutes of meditation or deep breathing daily"))
+            }
+        }
+        
+        // Fatigue management
+        if tiredRatio > 0.3 {
+            if timePatterns.afternoonMood == .tired {
+                advice.append((priority: 7, text: "Afternoon fatigue is noticeable. Take a 15-minute light walk after lunch"))
+            } else {
+                advice.append((priority: 7, text: "Incorporate light exercise (walking) 3 times per week for 15 minutes"))
+            }
+        }
+        
+        // Positive habit reinforcement
+        if happyRatio > 0.4 {
+            advice.append((priority: 6, text: "Continue the positive activities mentioned in your records to maintain your current good state"))
+        } else if normalRatio > 0.5 {
+            if textInsights.healthIndicators.isEmpty {
+                advice.append((priority: 6, text: "To improve mood, incorporate enjoyable activities like exercise or hobbies 2-3 times per week"))
+            } else {
+                advice.append((priority: 6, text: "Keep a gratitude journal and record 3 positive things daily"))
+            }
+        }
+        
+        // Environment improvement
+        if timePatterns.eveningMood == .angry || textInsights.stressIndicators.count > 3 {
+            advice.append((priority: 5, text: "Create a relaxing evening environment and allocate time for stress relief activities"))
+        }
+        
+        // Return top 3 prioritized advice
+        let sortedAdvice = advice.sorted { $0.priority > $1.priority }
+        return Array(sortedAdvice.prefix(3).map { $0.text })
+    }
+    
+    private func generateEnglishContinuityMessage(totalEntries: Int) -> String {
+        if totalEntries >= 7 {
+            return "\\n✨ Continuous recording enables precise analysis including time patterns and content analysis."
+        } else if totalEntries >= 3 {
+            return "\\n📈 Continued recording will provide more detailed analysis and advice considering time patterns and content."
+        } else {
+            return "\\n🔄 More data will enable personalized context analysis optimized for you."
+        }
+    }
+    
+    private func translateInsightToEnglish(_ insight: String) -> String {
+        // Simple translation mapping for key insights
+        if insight.contains("朝の時間帯に疲労感") {
+            return "Morning fatigue is concentrated. Reviewing sleep quality and wake-up time is important."
+        } else if insight.contains("夜の時間帯にストレスや疲労") {
+            return "Stress and fatigue tend to accumulate in evening hours. Securing relaxation time is effective."
+        } else if insight.contains("午後に体調が下がる") {
+            return "Afternoon energy dips are observed. Light walks after lunch or appropriate rest can be effective."
+        } else if insight.contains("夜遅い時間の記録") {
+            return "Late-night entries are frequent. Earlier bedtime could improve morning mood."
+        } else if insight.contains("ストレス関連の内容が多く") {
+            return "Records contain many stress-related content. Consider conscious exercise and rest time."
+        } else if insight.contains("健康的な活動への言及") {
+            return "References to healthy activities are observed. Continuing these good habits is important."
+        } else if insight.contains("ポジティブな内容が多く") {
+            return "Records contain many positive contents. Analyze factors maintaining current good state and continue them."
+        } else {
+            // If no specific translation, return a generic English version
+            return "Pattern analysis suggests areas for potential improvement in daily routines."
+        }
+    }
+    
     // MARK: - Data Structures for Enhanced Analysis
     
     private struct TimePatterns {
@@ -670,6 +899,7 @@ struct StatisticsView: View {
 
 /// 統計カードコンポーネント
 struct StatCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let title: String
     let value: String
     let subtitle: String
@@ -703,6 +933,7 @@ struct StatCard: View {
 
 /// 機能紹介コンポーネント（統計画面用）
 struct StatisticsFeatureRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let icon: String
     let title: String
     let description: String
@@ -735,10 +966,10 @@ enum StatisticsPeriod: CaseIterable {
     
     var displayName: String {
         switch self {
-        case .week: return "1週間"
-        case .month: return "1ヶ月"
-        case .threeMonths: return "3ヶ月"
-        case .year: return "1年"
+        case .week: return NSLocalizedString("statistics.period.week", comment: "")
+        case .month: return NSLocalizedString("statistics.period.month", comment: "")
+        case .threeMonths: return NSLocalizedString("statistics.period.three_months", comment: "")
+        case .year: return NSLocalizedString("statistics.period.year", comment: "")
         }
     }
     

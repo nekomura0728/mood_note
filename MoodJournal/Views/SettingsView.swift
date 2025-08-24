@@ -3,6 +3,7 @@ import UserNotifications
 
 /// 設定画面
 struct SettingsView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var notificationManager = NotificationManager.shared
     @StateObject private var proManager = ProManager.shared
     @State private var showingTimePicker = false
@@ -14,6 +15,7 @@ struct SettingsView: View {
                 // Pro版セクション  
                 proVersionSection
                 
+#if DEBUG
                 // デバッグセクション
                 Section {
                     // Pro版切り替え
@@ -23,10 +25,10 @@ struct SettingsView: View {
                             .frame(width: 24)
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Pro版ステータス")
+                            Text(LocalizedStringKey("debug.pro_status"))
                                 .font(.system(size: 16, weight: .medium, design: .rounded))
                             
-                            Text("シミュレーター用デバッグ機能")
+                            Text(LocalizedStringKey("debug.pro_toggle"))
                                 .font(.system(size: 12, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -45,9 +47,9 @@ struct SettingsView: View {
                         ))
                     }
                     
-                    // サンプルデータ追加
+                    // 日本語サンプルデータ追加
                     Button(action: {
-                        DataController.shared.addDebugSampleData()
+                        DataController.shared.addJapaneseSampleData()
                     }) {
                         HStack {
                             Image(systemName: "plus.circle.fill")
@@ -55,11 +57,34 @@ struct SettingsView: View {
                                 .frame(width: 24)
                             
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("サンプルデータ追加")
+                                Text(LocalizedStringKey("debug.japanese_sample"))
                                     .font(.system(size: 16, weight: .medium, design: .rounded))
                                     .foregroundColor(.primary)
                                 
-                                Text("過去2週間のテストデータを生成")
+                                Text(LocalizedStringKey("debug.japanese_description"))
+                                    .font(.system(size: 12, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                    
+                    // 英語サンプルデータ追加
+                    Button(action: {
+                        DataController.shared.addEnglishSampleData()
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                                .frame(width: 24)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(LocalizedStringKey("debug.english_sample"))
+                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    .foregroundColor(.primary)
+                                
+                                Text(LocalizedStringKey("debug.english_description"))
                                     .font(.system(size: 12, design: .rounded))
                                     .foregroundColor(.secondary)
                             }
@@ -68,10 +93,11 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("🛠️ デバッグ機能")
+                    Text(LocalizedStringKey("debug.section"))
                 } footer: {
-                    Text("Pro機能をテストするためのデバッグ機能です。")
+                    Text(LocalizedStringKey("debug.footer"))
                 }
+#endif
                 
                 // 通知設定セクション
                 notificationSection
@@ -79,42 +105,10 @@ struct SettingsView: View {
                 // アプリ情報セクション
                 aboutSection
                 
-                // 簡易デバッグセクション  
-                Section {
-                    Button("Pro版を有効にする（デバッグ用）") {
-                        UserDefaults.standard.set(true, forKey: "is_pro_user")
-                        UserDefaults.standard.set(Date(), forKey: "pro_purchase_date")
-                        // アプリを再起動して確認
-                    }
-                    .foregroundColor(.orange)
-                    
-                    Button("サンプルデータを追加（デバッグ用）") {
-                        // 簡易サンプルデータ追加
-                        let dataController = DataController.shared
-                        let calendar = Calendar.current
-                        let now = Date()
-                        
-                        // 過去7日間のサンプルデータ
-                        for i in 0..<7 {
-                            guard let date = calendar.date(byAdding: .day, value: -i, to: now) else { continue }
-                            let moods: [Mood] = [.happy, .normal, .tired, .angry, .sleepy]
-                            let randomMood = moods.randomElement() ?? .normal
-                            let texts = ["今日は良い日", "普通の日", "疲れた", "イライラ", "眠い"]
-                            
-                            dataController.createEntry(mood: randomMood, text: texts.randomElement())
-                        }
-                    }
-                    .foregroundColor(.blue)
-                    
-                } header: {
-                    Text("デバッグ機能")
-                } footer: {
-                    Text("Pro機能をテストするためのデバッグ機能です。")
-                }
             }
-            .navigationTitle("設定")
+            .navigationTitle(LocalizedStringKey("settings.title"))
             .navigationBarTitleDisplayMode(.large)
-            .background(Theme.gradientBackground.ignoresSafeArea())
+            .background(Theme.gradientBackground(for: colorScheme).ignoresSafeArea())
             .onAppear {
                 notificationManager.setupNotificationActions()
             }
@@ -124,9 +118,7 @@ struct SettingsView: View {
         }
     }
     
-    // MARK: - Views
-    
-    private var proVersionSection: some View {
+  private var proVersionSection: some View {
         Section {
             if proManager.isPro {
                 // 購入済みの場合
@@ -136,10 +128,10 @@ struct SettingsView: View {
                         .frame(width: 24)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Pro版 利用中")
+                        Text(LocalizedStringKey("settings.pro_active"))
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
                         
-                        Text("パーソナルコーチング、詳細レポート")
+                        Text(LocalizedStringKey("settings.pro_features"))
                             .font(.system(size: 12, design: .rounded))
                             .foregroundColor(.secondary)
                     }
@@ -159,11 +151,11 @@ struct SettingsView: View {
                             .frame(width: 24)
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Pro版にアップグレード")
+                            Text(LocalizedStringKey("settings.pro_upgrade"))
                                 .font(.system(size: 16, weight: .semibold, design: .rounded))
                                 .foregroundColor(.primary)
                             
-                            Text("¥300買い切り - パーソナルコーチング、詳細レポート")
+                            Text(LocalizedStringKey("settings.pro_price"))
                                 .font(.system(size: 12, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -178,10 +170,10 @@ struct SettingsView: View {
                 .buttonStyle(PlainButtonStyle())
             }
         } header: {
-            Text(proManager.isPro ? "Pro版" : "アップグレード")
+            Text(LocalizedStringKey(proManager.isPro ? "settings.pro_section" : "settings.pro_section"))
         } footer: {
             if !proManager.isPro {
-                Text("Pro版ではパーソナルコーチング、詳細レポートをご利用いただけます。")
+                Text(LocalizedStringKey("settings.pro_features"))
             }
         }
     }
@@ -195,10 +187,10 @@ struct SettingsView: View {
                     .frame(width: 24)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("毎日のリマインダー")
+                    Text(LocalizedStringKey("settings.daily_reminder"))
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                     
-                    Text("気分記録を忘れないようにお知らせします")
+                    Text(LocalizedStringKey("settings.reminder_description"))
                         .font(.system(size: 12, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -230,7 +222,7 @@ struct SettingsView: View {
                         .frame(width: 24)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("通知時刻")
+                        Text(LocalizedStringKey("settings.notification_time"))
                             .font(.system(size: 16, weight: .medium, design: .rounded))
                         
                         Text(formatTime(notificationManager.notificationTime))
@@ -240,7 +232,7 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    Button("変更") {
+                    Button(LocalizedStringKey("settings.change")) {
                         showingTimePicker = true
                     }
                     .font(.system(size: 14, weight: .medium, design: .rounded))
@@ -255,18 +247,18 @@ struct SettingsView: View {
                         .frame(width: 24)
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("通知が無効になっています")
+                        Text(LocalizedStringKey("settings.notification_disabled"))
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                             .foregroundColor(.red)
                         
-                        Text("設定アプリで通知を有効にしてください")
+                        Text(LocalizedStringKey("settings.open_settings"))
                             .font(.system(size: 12, design: .rounded))
                             .foregroundColor(.secondary)
                     }
                     
                     Spacer()
                     
-                    Button("設定を開く") {
+                    Button(LocalizedStringKey("settings.open_settings")) {
                         openAppSettings()
                     }
                     .font(.system(size: 12, weight: .medium, design: .rounded))
@@ -274,9 +266,9 @@ struct SettingsView: View {
                 }
             }
         } header: {
-            Text("通知")
+            Text(LocalizedStringKey("settings.notifications"))
         } footer: {
-            Text("毎日指定した時刻に気分記録のリマインダーが届きます")
+            Text(LocalizedStringKey("settings.reminder_description"))
         }
     }
     
@@ -284,43 +276,63 @@ struct SettingsView: View {
     private var aboutSection: some View {
         Section {
             // アプリ名・バージョン
-            HStack {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.pink)
-                    .frame(width: 24)
-                
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("きぶん日記")
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
+            Button(action: {
+                openWebsite("https://nekomura0728.github.io/mood_note/")
+            }) {
+                HStack {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.pink)
+                        .frame(width: 24)
                     
-                    Text("Version 1.0.0")
-                        .font(.system(size: 12, design: .rounded))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("きぶん日記")
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .foregroundColor(.primary)
+                        
+                        Text(LocalizedStringKey("settings.version"))
+                            .font(.system(size: 12, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.secondary)
                 }
-                
-                Spacer()
             }
+            .buttonStyle(PlainButtonStyle())
             
-            // プライバシー
-            HStack {
-                Image(systemName: "lock.shield.fill")
-                    .foregroundColor(.green)
-                    .frame(width: 24)
-                
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("プライバシー重視")
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
+            // プライバシーポリシー
+            Button(action: {
+                openWebsite("https://nekomura0728.github.io/mood_note/privacy.html")
+            }) {
+                HStack {
+                    Image(systemName: "lock.shield.fill")
+                        .foregroundColor(.green)
+                        .frame(width: 24)
                     
-                    Text("データは端末内にのみ保存されます")
-                        .font(.system(size: 12, design: .rounded))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(LocalizedStringKey("settings.privacy_policy"))
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .foregroundColor(.primary)
+                        
+                        Text(LocalizedStringKey("settings.data_protection"))
+                            .font(.system(size: 12, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.secondary)
                 }
-                
-                Spacer()
             }
+            .buttonStyle(PlainButtonStyle())
             
         } header: {
-            Text("アプリについて")
+            Text(LocalizedStringKey("settings.app_info"))
         }
     }
     
@@ -328,7 +340,7 @@ struct SettingsView: View {
     
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
@@ -336,6 +348,12 @@ struct SettingsView: View {
     private func openAppSettings() {
         if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(settingsUrl)
+        }
+    }
+    
+    private func openWebsite(_ urlString: String) {
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
         }
     }
 }
@@ -346,12 +364,12 @@ extension SettingsView {
     private var timePickerSheet: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("通知時刻を設定")
+                Text(LocalizedStringKey("time_picker.title"))
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .padding(.top)
                 
                 DatePicker(
-                    "時刻",
+                    LocalizedStringKey("time_picker.title"),
                     selection: Binding(
                         get: { notificationManager.notificationTime },
                         set: { newTime in
@@ -372,7 +390,7 @@ extension SettingsView {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("完了") {
+                    Button(LocalizedStringKey("time_picker.done")) {
                         showingTimePicker = false
                     }
                 }
@@ -383,6 +401,7 @@ extension SettingsView {
 
 /// Pro版機能の項目
 struct ProFeatureRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let icon: String
     let title: String
     let description: String

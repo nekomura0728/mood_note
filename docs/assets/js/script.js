@@ -34,9 +34,9 @@ const translations = {
         thirdPartyDesc: "法令に基づく場合を除き、個人情報を第三者に提供することはありません。"
     },
     en: {
-        appName: "😌 Mood Journal",
+        appName: "😌 Mood Note",
         langButton: "日本語",
-        title: "Mood Journal",
+        title: "Mood Note",
         subtitle: "Track your daily mood and support your mental health with AI coaching",
         featuresTitle: "Key Features",
         feature1Title: "Easy Mood Tracking",
@@ -50,15 +50,15 @@ const translations = {
         proDesc: "AI-powered personal coaching and detailed analytics",
         proFeature1: "Personal Coaching - Analyze mood patterns and provide advice",
         proFeature2: "Detailed Reports - Long-term trend analysis",
-        priceText: "$2.99",
+        priceText: "$1.99",
         priceNote: "One-time purchase",
         contactTitle: "Contact",
         privacyLink: "Privacy Policy",
-        footer: "© 2025 Mood Journal. All rights reserved.",
+        footer: "© 2025 Mood Note. All rights reserved.",
         // Privacy page
         privacyTitle: "Privacy Policy",
         backButton: "← Back",
-        privacyIntro: "Mood Journal prioritizes user privacy above all else.",
+        privacyIntro: "Mood Note prioritizes user privacy above all else.",
         dataTitle: "Data Collection",
         dataDesc: "We only collect mood records, notes, and notification settings.",
         storageTitle: "Data Storage",
@@ -86,7 +86,7 @@ function setupLanguageToggle() {
 function toggleLanguage() {
     currentLang = currentLang === 'ja' ? 'en' : 'ja';
     updateContent();
-    localStorage.setItem('mood-journal-lang', currentLang);
+    localStorage.setItem('mood-note-lang', currentLang);
 }
 
 function updateContent() {
@@ -135,7 +135,7 @@ function updateText(selector, text) {
 }
 
 // Load saved language
-const savedLang = localStorage.getItem('mood-journal-lang');
+const savedLang = localStorage.getItem('mood-note-lang');
 if (savedLang) {
     currentLang = savedLang;
 }

@@ -21,8 +21,8 @@ struct MoodLockScreenWidget: Widget {
                 ))
             }
         }
-        .configurationDisplayName("今日の気分")
-        .description("今日の気分記録状況を表示します")
+        .configurationDisplayName(NSLocalizedString("widget.lock.title", comment: ""))
+        .description(NSLocalizedString("widget.lock.description", comment: ""))
         .supportedFamilies([.accessoryRectangular])
     }
 }
@@ -35,7 +35,7 @@ struct MoodLockScreenWidgetView: View {
         VStack(alignment: .leading, spacing: 2) {
             // ヘッダー行
             HStack(spacing: 8) {
-                Text("きぶん日記")
+                Text(NSLocalizedString("widget.home.title", comment: ""))
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundColor(.primary)
                 
@@ -65,7 +65,7 @@ struct MoodLockScreenWidgetView: View {
                         .foregroundColor(.secondary)
                 }
             } else {
-                Text("今日はまだ未記録")
+                Text(NSLocalizedString("widget.no_record", comment: ""))
                     .font(.system(size: 12, weight: .regular, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -88,10 +88,10 @@ struct MoodLockScreenWidgetView: View {
     
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         formatter.dateFormat = "HH:mm"
         let result = formatter.string(from: date)
-        return result.isEmpty ? "時刻不明" : result
+        return result.isEmpty ? NSLocalizedString("widget.time_unknown", comment: "") : result
     }
 }
 
@@ -101,7 +101,7 @@ struct MoodLockScreenWidgetView: View {
     MoodTimelineEntry(
         date: Date(),
         todayMood: Mood.happy,
-        todayText: "今日はとても良い1日でした！",
+        todayText: NSLocalizedString("widget.placeholder_text", comment: ""),
         timestamp: Date(),
         recentMoods: []
     )

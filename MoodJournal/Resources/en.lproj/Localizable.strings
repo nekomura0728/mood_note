@@ -1,0 +1,179 @@
+/* Main Navigation */
+"tab.record" = "Record";
+"tab.timeline" = "Timeline";
+"tab.calendar" = "Calendar";
+"tab.statistics" = "Reports";
+"tab.settings" = "Settings";
+
+/* Record View */
+"record.title" = "Today's Mood";
+"record.subtitle" = "Choose a stamp to record your mood";
+"record.select_mood" = "Please select your mood";
+"record.placeholder" = "How was your day?";
+"record.optional_note" = "Note (Optional)";
+"record.save" = "Record";
+"record.success" = "Recorded!";
+"record.today_mood" = "Today's Mood";
+
+/* Mood Types */
+"mood.happy" = "Happy";
+"mood.normal" = "Normal";
+"mood.tired" = "Tired";
+"mood.angry" = "Angry";
+"mood.sleepy" = "Sleepy";
+
+/* Timeline View */
+"timeline.title" = "Timeline";
+"timeline.no_entries" = "No records yet";
+"timeline.entry_count" = "%d entries";
+"timeline.today" = "Today";
+"timeline.yesterday" = "Yesterday";
+
+/* Calendar View */
+"calendar.title" = "Calendar";
+"calendar.no_record" = "No records for this day";
+"calendar.close" = "Close";
+
+/* Statistics/Reports */
+"statistics.title" = "Reports";
+"statistics.calculating" = "Calculating statistics...";
+"statistics.period" = "Period";
+"statistics.overview" = "Record Overview";
+"statistics.total_entries" = "Total Records";
+"statistics.record_days" = "Record Days";
+"statistics.entries_unit" = "entries";
+"statistics.days_unit" = "days";
+"statistics.most_frequent_mood" = "Most Frequent Mood";
+"statistics.times_format" = "%d times";
+"statistics.mood_distribution" = "Mood Distribution";
+"statistics.count_percentage_format" = "%d times (%.1f%%)";
+"statistics.no_data" = "No statistics data available";
+"statistics.no_data_description" = "Statistics will appear when\nyou record your moods";
+"statistics.pro_required_description" = "Detailed reports require\nupgrading to Pro version";
+"statistics.upgrade_to_pro" = "Upgrade to Pro";
+"statistics.recommended" = "Recommended";
+"statistics.period.week" = "1 Week";
+"statistics.period.month" = "1 Month";
+"statistics.period.three_months" = "3 Months";
+"statistics.period.year" = "1 Year";
+"statistics.pro_required" = "Pro version required";
+"statistics.personal_coaching" = "Personal Coaching";
+"statistics.detailed_reports" = "Detailed Reports";
+
+/* Personal Coaching */
+"coaching.title" = "Personal Coaching";
+"coaching.description" = "Analyze mood patterns and\nprovide personalized advice";
+"coaching.analyzing" = "Analyzing...";
+"coaching.no_data" = "Insufficient data for analysis.\nPlease continue recording for at least a week.";
+
+/* Detailed Reports */
+"detailed_reports.title" = "Detailed Reports";
+
+/* Weekly Insights */
+"weekly_insights.title" = "Weekly Insights";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.pro_section" = "Pro Version";
+"settings.pro_upgrade" = "Upgrade to Pro";
+"settings.pro_active" = "Pro Version Active";
+"settings.pro_features" = "Personal coaching, detailed reports";
+"settings.pro_price" = "$1.99 one-time";
+"settings.notifications" = "Notifications";
+"settings.daily_reminder" = "Daily Reminder";
+"settings.reminder_description" = "Get notified to record your daily mood";
+"settings.notification_time" = "Notification Time";
+"settings.change" = "Change";
+"settings.notification_disabled" = "Notifications are disabled";
+"settings.open_settings" = "Open Settings";
+"settings.app_info" = "About";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.data_protection" = "About data protection";
+"settings.version" = "Version 1.0.0";
+
+/* Debug Settings */
+"debug.section" = "🛠️ Debug Features";
+"debug.pro_status" = "Pro Status";
+"debug.pro_toggle" = "Simulator debug feature";
+"debug.japanese_sample" = "日本語サンプルデータ追加";
+"debug.english_sample" = "English Sample Data";
+"debug.japanese_description" = "スクリーンショット用日本語データ";
+"debug.english_description" = "Sample data for English screenshots";
+"debug.footer" = "Test Pro features in simulator.";
+
+/* Pro Version */
+"pro.title" = "Pro Features";
+"pro.subtitle" = "Unlock advanced features to better\nunderstand and connect with yourself";
+"pro.one_time" = "One-time";
+"pro.no_subscription" = "No monthly fees・No extra charges";
+"pro.purchase" = "Purchase";
+"pro.restore" = "Restore Purchase";
+"pro.restore_description" = "Try restoring if you have purchase issues";
+"pro.loading" = "Loading product info...";
+"pro.features_title" = "Pro Features";
+"pro.upgrade_title" = "Upgrade to Pro";
+"pro.detailed_reports" = "Detailed Reports";
+"pro.weekly_insights" = "Weekly Insights";
+"pro.personal_coaching_title" = "Personal Coaching";
+"pro.personal_coaching_desc" = "Analyze mood patterns and time periods for specific advice";
+"pro.detailed_reports_desc" = "Detailed long-term mood trend analysis and visualization";
+"pro.error" = "Error";
+"pro.purchase_button_purchasing" = "Purchasing...";
+"pro.one_time_purchase" = "One-time purchase";
+"pro.forever_use" = "Purchase once, use forever";
+"pro.loading_product_info" = "Loading product info...";
+"pro.reload" = "Reload";
+"pro.restore_purchase" = "Restore Purchase";
+"pro.already_purchased" = "If you have already purchased, click here";
+"pro.debug_price_jp" = "¥300";
+"pro.debug_price_en" = "$1.99";
+"pro.purchase_button_purchased" = "Purchased";
+"pro.purchase_button_restored" = "Restored";
+
+/* Pro Required */
+"pro_required.title" = "Pro Exclusive Feature";
+"pro_required.description" = "This feature requires\nupgrading to Pro version";
+"pro_required.upgrade" = "Upgrade to Pro";
+"pro_required.one_time_price" = "One-time purchase, use forever";
+"pro_required.detailed_analytics" = "Detailed Statistical Analysis";
+"pro_required.detailed_analytics_desc" = "View mood changes by period with graphs";
+"pro_required.csv_export" = "CSV Export";
+"pro_required.csv_export_desc" = "Export data for analysis in external apps";
+"pro_required.additional_themes" = "Additional Themes";
+"pro_required.additional_themes_desc" = "Customize with your favorite color scheme";
+
+/* Time Picker */
+"time_picker.title" = "Set Notification Time";
+"time_picker.done" = "Done";
+
+/* Notifications */
+"notification.reminder_title" = "Mood Record Reminder";
+"notification.reminder_body" = "How are you feeling today?";
+
+/* Common */
+"common.cancel" = "Cancel";
+"common.done" = "Done";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.ok" = "OK";
+"common.back" = "Back";
+"common.next" = "Next";
+"common.previous" = "Previous";
+
+/* Date Formats */
+"date.today" = "Today";
+"date.yesterday" = "Yesterday";
+
+/* Widget */
+"widget.home.title" = "Mood Note 5";
+"widget.home.description" = "View your recent mood records";
+"widget.lock.title" = "Today's Mood";
+"widget.lock.description" = "Display today's mood record status";
+"widget.today_prefix" = "Today is ";
+"widget.record_prompt" = "Let's record";
+"widget.recent_days" = "Last 7 days";
+"widget.no_record" = "No record yet today";
+"widget.time_unknown" = "Time unknown";
+"widget.sample_text" = "What a great day!";
+"widget.placeholder_text" = "Today was an amazing day!";

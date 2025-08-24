@@ -11,7 +11,7 @@ struct MainTabView: View {
             TimelineView()
                 .tabItem {
                     Image(systemName: "list.bullet")
-                    Text("タイムライン")
+                    Text(LocalizedStringKey("tab.timeline"))
                 }
                 .tag(0)
             
@@ -19,7 +19,7 @@ struct MainTabView: View {
             RecordView()
                 .tabItem {
                     Image(systemName: "plus.circle.fill")
-                    Text("記録")
+                    Text(LocalizedStringKey("tab.record"))
                 }
                 .tag(1)
             
@@ -27,7 +27,7 @@ struct MainTabView: View {
             CalendarView()
                 .tabItem {
                     Image(systemName: "calendar")
-                    Text("カレンダー")
+                    Text(LocalizedStringKey("tab.calendar"))
                 }
                 .tag(2)
             
@@ -35,7 +35,7 @@ struct MainTabView: View {
             StatisticsView()
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text("レポート")
+                    Text(LocalizedStringKey("tab.statistics"))
                 }
                 .tag(3)
             
@@ -43,7 +43,7 @@ struct MainTabView: View {
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text("設定")
+                    Text(LocalizedStringKey("tab.settings"))
                 }
                 .tag(4)
         }

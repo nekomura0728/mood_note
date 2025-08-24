@@ -21,8 +21,8 @@ struct MoodHomeScreenWidget: Widget {
                 ))
             }
         }
-        .configurationDisplayName("きぶん日記")
-        .description("直近の気分記録を表示します")
+        .configurationDisplayName(NSLocalizedString("widget.home.title", comment: ""))
+        .description(NSLocalizedString("widget.home.description", comment: ""))
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
@@ -49,7 +49,7 @@ struct MoodHomeScreenWidgetView: View {
         VStack(spacing: 8) {
             // ヘッダー
             HStack {
-                Text("きぶん日記")
+                Text(NSLocalizedString("widget.home.title", comment: ""))
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
                 Spacer()
@@ -63,7 +63,7 @@ struct MoodHomeScreenWidgetView: View {
                     Text(mood.emoji)
                         .font(.system(size: 32))
                     
-                    Text("今日は\(mood.displayName)")
+                    Text("\(NSLocalizedString("widget.today_prefix", comment: ""))\(mood.displayName)")
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -74,7 +74,7 @@ struct MoodHomeScreenWidgetView: View {
                         .font(.system(size: 24))
                         .foregroundColor(.secondary)
                     
-                    Text("記録しましょう")
+                    Text(NSLocalizedString("widget.record_prompt", comment: ""))
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -97,11 +97,11 @@ struct MoodHomeScreenWidgetView: View {
             // ヘッダー
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("きぶん日記")
+                    Text(NSLocalizedString("widget.home.title", comment: ""))
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                     
-                    Text("直近7日間")
+                    Text(NSLocalizedString("widget.recent_days", comment: ""))
                         .font(.system(size: 12, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -113,7 +113,7 @@ struct MoodHomeScreenWidgetView: View {
                     VStack(spacing: 2) {
                         Text(mood.emoji)
                             .font(.system(size: 20))
-                        Text("今日")
+                        Text(NSLocalizedString("date.today", comment: ""))
                             .font(.system(size: 8, weight: .medium, design: .rounded))
                             .foregroundColor(.secondary)
                     }
@@ -122,7 +122,7 @@ struct MoodHomeScreenWidgetView: View {
                         Image(systemName: "plus.circle")
                             .font(.system(size: 16))
                             .foregroundColor(.secondary)
-                        Text("今日")
+                        Text(NSLocalizedString("date.today", comment: ""))
                             .font(.system(size: 8, weight: .medium, design: .rounded))
                             .foregroundColor(.secondary)
                     }
@@ -137,7 +137,7 @@ struct MoodHomeScreenWidgetView: View {
                     VStack(spacing: 4) {
                         if let mood = mood {
                             Text(mood.emoji)
-                                .font(.system(size: 16))
+                                .font(.system(size: 20))
                         } else {
                             Circle()
                                 .fill(Color.gray.opacity(0.3))
@@ -145,7 +145,7 @@ struct MoodHomeScreenWidgetView: View {
                         }
                         
                         Text(dayLabel(for: index))
-                            .font(.system(size: 8, weight: .regular, design: .rounded))
+                            .font(.system(size: 10, weight: .regular, design: .rounded))
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity)
@@ -159,7 +159,7 @@ struct MoodHomeScreenWidgetView: View {
                             .frame(width: 16, height: 16)
                         
                         Text(dayLabel(for: index))
-                            .font(.system(size: 8, weight: .regular, design: .rounded))
+                            .font(.system(size: 10, weight: .regular, design: .rounded))
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity)
@@ -204,7 +204,7 @@ struct MoodHomeScreenWidgetView: View {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d"
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         let result = formatter.string(from: date)
         return result.isEmpty ? "\(index + 1)" : result
     }
@@ -216,7 +216,7 @@ struct MoodHomeScreenWidgetView: View {
     MoodTimelineEntry(
         date: Date(),
         todayMood: Mood.happy,
-        todayText: "良い1日でした",
+        todayText: NSLocalizedString("widget.sample_text", comment: ""),
         timestamp: Date(),
         recentMoods: [Mood.tired, Mood.normal, Mood.happy, Mood.angry, Mood.sleepy, Mood.normal, Mood.happy]
     )
@@ -228,7 +228,7 @@ struct MoodHomeScreenWidgetView: View {
     MoodTimelineEntry(
         date: Date(),
         todayMood: Mood.happy,
-        todayText: "良い1日でした",
+        todayText: NSLocalizedString("widget.sample_text", comment: ""),
         timestamp: Date(),
         recentMoods: [Mood.tired, Mood.normal, Mood.happy, Mood.angry, Mood.sleepy, Mood.normal, Mood.happy]
     )

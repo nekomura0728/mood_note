@@ -1,0 +1,4 @@
+/* English localization for Info.plist */
+"CFBundleDisplayName" = "Mood Note";
+"CFBundleName" = "Mood Note";
+"NSUserNotificationsUsageDescription" = "We use notifications to remind you to record your daily mood.";

@@ -44,7 +44,7 @@ final class MoodEntry {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         return formatter.string(from: timestamp)
     }
     
@@ -53,7 +53,7 @@ final class MoodEntry {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale.current
         return formatter.string(from: timestamp)
     }
 }

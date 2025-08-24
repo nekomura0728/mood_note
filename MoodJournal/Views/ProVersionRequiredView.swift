@@ -2,12 +2,13 @@ import SwiftUI
 
 /// Pro版が必要な機能にアクセスした際の案内画面
 struct ProVersionRequiredView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @State private var isPresentingProVersion = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 VStack(spacing: 32) {
                     Spacer()
@@ -27,11 +28,11 @@ struct ProVersionRequiredView: View {
                                 .font(.system(size: 60))
                         }
                         
-                        Text("Pro版限定機能")
+                        Text(NSLocalizedString("pro_required.title", comment: ""))
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(.primary)
                         
-                        Text("この機能をご利用いただくには\nPro版へのアップグレードが必要です")
+                        Text(NSLocalizedString("pro_required.description", comment: ""))
                             .font(.system(size: 16, weight: .medium, design: .rounded))
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -42,20 +43,20 @@ struct ProVersionRequiredView: View {
                     VStack(spacing: 20) {
                         FeaturePreviewRow(
                             icon: "📊",
-                            title: "詳細な統計分析",
-                            description: "気分の変化を期間別にグラフで確認"
+                            title: NSLocalizedString("pro_required.detailed_analytics", comment: ""),
+                            description: NSLocalizedString("pro_required.detailed_analytics_desc", comment: "")
                         )
                         
                         FeaturePreviewRow(
                             icon: "📁",
-                            title: "CSVエクスポート",
-                            description: "データを外部アプリで分析可能"
+                            title: NSLocalizedString("pro_required.csv_export", comment: ""),
+                            description: NSLocalizedString("pro_required.csv_export_desc", comment: "")
                         )
                         
                         FeaturePreviewRow(
                             icon: "🎨",
-                            title: "追加テーマ",
-                            description: "お好みの色合いでカスタマイズ"
+                            title: NSLocalizedString("pro_required.additional_themes", comment: ""),
+                            description: NSLocalizedString("pro_required.additional_themes_desc", comment: "")
                         )
                     }
                     .padding(.horizontal, 20)
@@ -71,7 +72,7 @@ struct ProVersionRequiredView: View {
                                 Image(systemName: "star.fill")
                                     .font(.system(size: 16))
                                 
-                                Text("Pro版にアップグレード")
+                                Text(NSLocalizedString("pro_required.upgrade", comment: ""))
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                             }
                             .foregroundColor(.white)
@@ -87,7 +88,7 @@ struct ProVersionRequiredView: View {
                             .cornerRadius(28)
                         }
                         
-                        Text("買い切り価格でずっと使える")
+                        Text(NSLocalizedString("pro_required.one_time_price", comment: ""))
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                             .foregroundColor(.secondary)
                     }
@@ -95,7 +96,7 @@ struct ProVersionRequiredView: View {
                     .padding(.bottom, 32)
                 }
             }
-            .navigationTitle("統計")
+            .navigationTitle("statistics.title")
             .navigationBarTitleDisplayMode(.large)
         }
         .fullScreenCover(isPresented: $isPresentingProVersion) {
@@ -106,6 +107,7 @@ struct ProVersionRequiredView: View {
 
 /// 機能プレビュー行
 struct FeaturePreviewRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let icon: String
     let title: String
     let description: String

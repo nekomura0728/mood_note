@@ -2,125 +2,116 @@ import SwiftUI
 
 /// タイムライン表示画面
 struct TimelineView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var dataController = DataController.shared
     @State private var entries: [MoodEntry] = []
-    @State private var groupedEntries: [(Date, [MoodEntry])] = []
-    @State private var isLoading = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if entries.isEmpty {
-                    emptyStateView
+                    VStack(spacing: 24) {
+                        Image(systemName: "heart.text.square")
+                            .font(.system(size: 60))
+                            .foregroundColor(.secondary)
+                        
+                        VStack(spacing: 8) {
+                            Text("timeline.no_entries")
+                                .font(Theme.titleFont)
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.center)
+                        }
+                    }
                 } else {
-                    timelineList
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            ForEach(groupedEntries, id: \.key) { dateGroup in
+                                // 日付ヘッダー
+                                dateHeaderView(for: dateGroup.key)
+                                    .padding(.horizontal, 20)
+                                    .padding(.top, dateGroup.key == groupedEntries.first?.key ? 20 : 24)
+                                    .padding(.bottom, 8)
+                                
+                                // エントリーリスト
+                                VStack(spacing: 12) {
+                                    ForEach(dateGroup.value, id: \.id) { entry in
+                                        EntryCard(entry: entry, showDate: false)
+                                            .padding(.horizontal, 20)
+                                    }
+                                }
+                                .padding(.bottom, 12)
+                            }
+                        }
+                        .padding(.bottom, 20)
+                    }
                 }
             }
-            .navigationTitle("タイムライン")
+            .navigationTitle("timeline.title")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 loadEntries()
             }
-            .refreshable {
-                loadEntries()
-            }
         }
     }
     
-    // MARK: - Views
+    // MARK: - Computed Properties
     
-    private var emptyStateView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "calendar.badge.plus")
-                .font(.system(size: 60))
-                .foregroundColor(.secondary)
-            
-            Text("まだ記録がありません")
-                .font(Theme.titleFont)
-                .foregroundColor(.primary)
-            
-            Text("気分を記録して\n思い出を残しましょう")
-                .font(Theme.bodyFont)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
+    private var groupedEntries: [(key: Date, value: [MoodEntry])] {
+        let calendar = Calendar.current
+        let grouped = Dictionary(grouping: entries) { entry in
+            calendar.startOfDay(for: entry.timestamp)
         }
-        .padding(40)
-    }
-    
-    private var timelineList: some View {
-        ScrollView {
-            LazyVStack(spacing: 24) {
-                ForEach(groupedEntries, id: \.0) { date, dayEntries in
-                    VStack(alignment: .leading, spacing: 12) {
-                        // 日付ヘッダー
-                        dateHeader(for: date, entryCount: dayEntries.count)
-                        
-                        // その日のエントリー
-                        VStack(spacing: 12) {
-                            ForEach(dayEntries, id: \.id) { entry in
-                                EntryCard(entry: entry, showDate: false)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                }
-            }
-            .padding(.vertical, 20)
-        }
-    }
-    
-    private func dateHeader(for date: Date, entryCount: Int) -> some View {
-        HStack {
-            Text(formatDate(date))
-                .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundColor(.primary)
-            
-            Spacer()
-            
-            // 記録数を右側に表示
-            Text("\(entryCount)件の記録")
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundColor(.secondary)
-        }
-        .padding(.bottom, 8)
+        return grouped.sorted { $0.key > $1.key }
     }
     
     // MARK: - Helper Methods
     
     private func loadEntries() {
-        isLoading = true
         entries = dataController.fetchAllEntries()
-        groupedEntries = groupEntriesByDate(entries)
-        isLoading = false
     }
     
-    private func groupEntriesByDate(_ entries: [MoodEntry]) -> [(Date, [MoodEntry])] {
-        let grouped = Dictionary(grouping: entries) { entry in
-            Calendar.current.startOfDay(for: entry.timestamp)
+    private func dateHeaderView(for date: Date) -> some View {
+        HStack {
+            Text(formatDateHeader(date))
+                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .foregroundColor(.primary)
+            
+            Spacer()
+            
+            Text(countText(for: date))
+                .font(.system(size: 14, weight: .regular, design: .rounded))
+                .foregroundColor(.secondary)
         }
-        
-        return grouped.sorted { $0.key > $1.key } // 新しい日付順
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Theme.cardBackground(for: colorScheme).opacity(0.3))
+        )
     }
     
-    private func dayEntries(for date: Date) -> [MoodEntry] {
-        return groupedEntries.first { $0.0 == date }?.1 ?? []
-    }
-    
-    private func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
-        
+    private func formatDateHeader(_ date: Date) -> String {
         let calendar = Calendar.current
+        
         if calendar.isDateInToday(date) {
-            return "今日"
+            return NSLocalizedString("date.today", comment: "")
         } else if calendar.isDateInYesterday(date) {
-            return "昨日"
+            return NSLocalizedString("date.yesterday", comment: "")
         } else {
-            formatter.dateFormat = "M月d日(E)"
+            let formatter = DateFormatter()
+            formatter.locale = Locale.current
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
             return formatter.string(from: date)
         }
+    }
+    
+    private func countText(for date: Date) -> String {
+        let count = groupedEntries.first { $0.key == date }?.value.count ?? 0
+        let format = NSLocalizedString("timeline.entry_count", comment: "")
+        return String.localizedStringWithFormat(format, count)
     }
 }
 

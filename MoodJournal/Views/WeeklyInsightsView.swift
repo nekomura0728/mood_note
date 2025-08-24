@@ -2,6 +2,7 @@ import SwiftUI
 
 /// 週次インサイト表示画面
 struct WeeklyInsightsView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var insightGenerator = WeeklyInsightGenerator()
     @StateObject private var proManager = ProManager.shared
     @State private var selectedInsight: WeeklyInsight?
@@ -10,7 +11,7 @@ struct WeeklyInsightsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if !proManager.isPro {
                     proUpgradePrompt
@@ -18,7 +19,7 @@ struct WeeklyInsightsView: View {
                     mainContent
                 }
             }
-            .navigationTitle("週次インサイト")
+            .navigationTitle("weekly_insights.title")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 if proManager.isPro {
@@ -192,9 +193,9 @@ struct WeeklyInsightsView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -216,9 +217,9 @@ struct WeeklyInsightsView: View {
         .frame(height: 120)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -266,9 +267,9 @@ struct WeeklyInsightsView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -294,6 +295,7 @@ struct WeeklyInsightsView: View {
 
 /// 統計アイテムコンポーネント
 struct StatItem: View {
+    @Environment(\.colorScheme) private var colorScheme
     let title: String
     let value: String
     let subtitle: String
@@ -323,6 +325,7 @@ struct StatItem: View {
 
 /// 履歴インサイトカード
 struct HistoryInsightCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let insight: WeeklyInsight
     let onTap: () -> Void
     
@@ -352,7 +355,7 @@ struct HistoryInsightCard: View {
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Theme.cardBackground)
+                    .fill(Theme.cardBackground(for: colorScheme))
                     .shadow(
                         color: .black.opacity(0.05),
                         radius: 4,

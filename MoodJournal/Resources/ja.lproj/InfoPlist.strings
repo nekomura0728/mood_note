@@ -1,0 +1,4 @@
+/* Japanese localization for Info.plist */
+"CFBundleDisplayName" = "きぶん日記";
+"CFBundleName" = "きぶん日記";
+"NSUserNotificationsUsageDescription" = "毎日の気分記録をリマインドするために通知を使用します。";

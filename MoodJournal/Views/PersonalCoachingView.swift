@@ -2,6 +2,7 @@ import SwiftUI
 
 /// パーソナルコーチング表示画面
 struct PersonalCoachingView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var coachingSystem = PersonalCoachingSystem()
     @StateObject private var proManager = ProManager.shared
     @State private var showProUpgrade = false
@@ -9,7 +10,7 @@ struct PersonalCoachingView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if !proManager.isPro {
                     proUpgradePrompt
@@ -17,7 +18,7 @@ struct PersonalCoachingView: View {
                     mainContent
                 }
             }
-            .navigationTitle("パーソナルコーチ")
+            .navigationTitle("coaching.title")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 if proManager.isPro {
@@ -194,9 +195,9 @@ struct PersonalCoachingView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -258,9 +259,9 @@ struct PersonalCoachingView: View {
         .frame(height: 120)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -308,9 +309,9 @@ struct PersonalCoachingView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -336,6 +337,7 @@ struct PersonalCoachingView: View {
 
 /// アクションアイテム行
 struct ActionItemRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let item: String
     let index: Int
     
@@ -359,6 +361,7 @@ struct ActionItemRow: View {
 
 /// 次のステップ行
 struct NextStepRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let step: String
     let index: Int
     
@@ -380,6 +383,7 @@ struct NextStepRow: View {
 
 /// 分析メトリクスカード
 struct AnalysisMetricCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let title: String
     let value: String
     let subtitle: String
@@ -415,6 +419,7 @@ struct AnalysisMetricCard: View {
 
 /// 履歴コーチングカード
 struct HistoryCoachingCard: View {
+    @Environment(\.colorScheme) private var colorScheme
     let coaching: PersonalCoaching
     
     var body: some View {
@@ -450,7 +455,7 @@ struct HistoryCoachingCard: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
                     color: .black.opacity(0.05),
                     radius: 4,

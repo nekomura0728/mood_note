@@ -5,18 +5,18 @@
   ],
   "products" : [
     {
-      "displayPrice" : "450.00",
+      "displayPrice" : "300.00",
       "familyShareable" : false,
       "internalID" : "com.moodjournal.app.pro",
       "localizations" : [
         {
-          "description" : "統計分析、CSVエクスポート、追加テーマなどのPro機能をご利用いただけます。",
+          "description" : "パーソナルコーチなどのレポート機能がご利用いただけます。",
           "displayName" : "きぶん日記 Pro",
           "locale" : "ja"
         },
         {
-          "description" : "Unlock statistics, CSV export, additional themes, and other Pro features.",
-          "displayName" : "Mood Journal Pro",
+          "description" : "Personal coaching and reporting features are available.",
+          "displayName" : "Mood Note Pro",
           "locale" : "en_US"
         }
       ],

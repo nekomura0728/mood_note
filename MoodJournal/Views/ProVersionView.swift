@@ -2,12 +2,13 @@ import SwiftUI
 
 /// Pro版購入画面
 struct ProVersionView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var storeManager = StoreKitManager.shared
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
-            Theme.gradientBackground.ignoresSafeArea()
+            Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
             
             ScrollView {
                 VStack(spacing: 24) {
@@ -30,7 +31,7 @@ struct ProVersionView: View {
         .task {
             await storeManager.loadProducts()
         }
-        .alert("エラー", isPresented: .constant(storeManager.errorMessage != nil)) {
+        .alert(NSLocalizedString("pro.error", comment: ""), isPresented: .constant(storeManager.errorMessage != nil)) {
             Button("OK") {
                 storeManager.errorMessage = nil
             }
@@ -58,11 +59,11 @@ struct ProVersionView: View {
                         .font(.system(size: 40))
                 }
                 
-                Text("Pro版にアップグレード")
+                Text(NSLocalizedString("pro.upgrade_title", comment: ""))
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
                 
-                Text("パーソナルコーチと詳細レポートで気分を深く理解")
+                Text(NSLocalizedString("pro.subtitle", comment: ""))
                     .font(.system(size: 16, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -72,30 +73,30 @@ struct ProVersionView: View {
     
     private var featuresSection: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Pro版の機能")
+            Text(NSLocalizedString("pro.features_title", comment: ""))
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
             
             VStack(spacing: 16) {
                 FeatureRow(
                     icon: "🧑‍⚕️",
-                    title: "パーソナルコーチング",
-                    description: "気分パターンと時間帯を分析し、具体的なアドバイスを提供"
+                    title: NSLocalizedString("pro.personal_coaching_title", comment: ""),
+                    description: NSLocalizedString("pro.personal_coaching_desc", comment: "")
                 )
                 
                 FeatureRow(
                     icon: "📊",
-                    title: "詳細レポート",
-                    description: "長期間の気分傾向を詳細に分析・可視化"
+                    title: NSLocalizedString("pro.detailed_reports", comment: ""),
+                    description: NSLocalizedString("pro.detailed_reports_desc", comment: "")
                 )
             }
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0,
                     y: 2
@@ -107,7 +108,7 @@ struct ProVersionView: View {
         VStack(spacing: 16) {
             if let product = storeManager.proVersionProduct {
                 VStack(spacing: 8) {
-                    Text("買い切り価格")
+                    Text(NSLocalizedString("pro.one_time_purchase", comment: ""))
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                     
@@ -115,7 +116,7 @@ struct ProVersionView: View {
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                     
-                    Text("一度購入すれば永続利用可能")
+                    Text(NSLocalizedString("pro.forever_use", comment: ""))
                         .font(.system(size: 14, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -162,15 +163,15 @@ struct ProVersionView: View {
                 // デバッグモード用の商品情報
                 #if DEBUG
                 VStack(spacing: 8) {
-                    Text("買い切り価格")
+                    Text(NSLocalizedString("pro.one_time_purchase", comment: ""))
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                     
-                    Text("¥300")
+                    Text(debugPrice)
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                     
-                    Text("一度購入すれば永続利用可能")
+                    Text(NSLocalizedString("pro.forever_use", comment: ""))
                         .font(.system(size: 14, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -182,7 +183,7 @@ struct ProVersionView: View {
                     ProManager.shared.unlockProFeatures()
                     dismiss()
                 }) {
-                    Text("Pro版を購入")
+                    Text(NSLocalizedString("pro.purchase", comment: ""))
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -199,10 +200,10 @@ struct ProVersionView: View {
                 #else
                 // 商品情報読み込み中
                 VStack(spacing: 16) {
-                    ProgressView("商品情報を読み込み中...")
+                    ProgressView(NSLocalizedString("pro.loading_product_info", comment: ""))
                         .progressViewStyle(CircularProgressViewStyle())
                     
-                    Button("再読み込み") {
+                    Button(NSLocalizedString("pro.reload", comment: "")) {
                         Task {
                             await storeManager.loadProducts()
                         }
@@ -217,7 +218,7 @@ struct ProVersionView: View {
     
     private var restoreSection: some View {
         VStack(spacing: 8) {
-            Button("購入を復元") {
+            Button(NSLocalizedString("pro.restore_purchase", comment: "")) {
                 #if DEBUG
                 ProManager.shared.unlockProFeatures()
                 dismiss()
@@ -230,7 +231,7 @@ struct ProVersionView: View {
             .font(.system(size: 16, weight: .medium, design: .rounded))
             .foregroundColor(.blue)
             
-            Text("既に購入済みの場合はこちら")
+            Text(NSLocalizedString("pro.already_purchased", comment: ""))
                 .font(.system(size: 12, weight: .regular, design: .rounded))
                 .foregroundColor(.secondary)
         }
@@ -239,16 +240,21 @@ struct ProVersionView: View {
     
     // MARK: - Helper Properties
     
+    private var debugPrice: String {
+        let isEnglish = Locale.current.language.languageCode?.identifier == "en"
+        return isEnglish ? NSLocalizedString("pro.debug_price_en", comment: "") : NSLocalizedString("pro.debug_price_jp", comment: "")
+    }
+    
     private var purchaseButtonTitle: String {
         switch storeManager.purchaseState {
         case .purchasing:
-            return "購入中..."
+            return NSLocalizedString("pro.purchase_button_purchasing", comment: "")
         case .purchased:
-            return "購入済み"
+            return NSLocalizedString("pro.purchase_button_purchased", comment: "")
         case .restored:
-            return "復元済み"
+            return NSLocalizedString("pro.purchase_button_restored", comment: "")
         default:
-            return "Pro版を購入"
+            return NSLocalizedString("pro.purchase", comment: "")
         }
     }
     
@@ -275,6 +281,7 @@ struct ProVersionView: View {
 
 /// Pro版機能の項目
 struct FeatureRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let icon: String
     let title: String
     let description: String

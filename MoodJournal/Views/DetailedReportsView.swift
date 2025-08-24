@@ -2,6 +2,7 @@ import SwiftUI
 
 /// 詳細レポート表示画面
 struct DetailedReportsView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var reportsManager = DetailedReportsManager()
     @StateObject private var proManager = ProManager.shared
     @State private var selectedPeriod: ReportPeriod = .month
@@ -10,7 +11,7 @@ struct DetailedReportsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Theme.gradientBackground.ignoresSafeArea()
+                Theme.gradientBackground(for: colorScheme).ignoresSafeArea()
                 
                 if !proManager.isPro {
                     proUpgradePrompt
@@ -18,7 +19,7 @@ struct DetailedReportsView: View {
                     mainContent
                 }
             }
-            .navigationTitle("詳細レポート")
+            .navigationTitle("detailed_reports.title")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 if proManager.isPro {
@@ -126,9 +127,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -224,9 +225,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -248,9 +249,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -272,9 +273,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -299,9 +300,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -327,9 +328,9 @@ struct DetailedReportsView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -413,9 +414,9 @@ struct DetailedReportsView: View {
         .frame(height: 120)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -463,9 +464,9 @@ struct DetailedReportsView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: Theme.cardCornerRadius)
-                .fill(Theme.cardBackground)
+                .fill(Theme.cardBackground(for: colorScheme))
                 .shadow(
-                    color: .black.opacity(Theme.cardShadowOpacity),
+                    color: .black.opacity(Theme.cardShadowOpacity(for: colorScheme)),
                     radius: Theme.cardShadowRadius,
                     x: 0, y: 2
                 )
@@ -477,6 +478,7 @@ struct DetailedReportsView: View {
 
 /// メトリクスアイテム
 struct MetricItem: View {
+    @Environment(\.colorScheme) private var colorScheme
     let title: String
     let value: String
     let subtitle: String
@@ -512,6 +514,7 @@ struct MetricItem: View {
 
 /// 気分トレンド行
 struct MoodTrendRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let trend: MoodTrend
     
     var body: some View {
@@ -546,6 +549,7 @@ struct MoodTrendRow: View {
 
 /// パターンインサイト行
 struct PatternInsightRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let insight: PatternInsight
     
     var body: some View {
@@ -573,6 +577,7 @@ struct PatternInsightRow: View {
 
 /// 推奨事項行
 struct RecommendationRow: View {
+    @Environment(\.colorScheme) private var colorScheme
     let recommendation: String
     let index: Int
     

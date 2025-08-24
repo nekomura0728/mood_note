@@ -115,8 +115,28 @@ class DataController: ObservableObject {
     #endif
     
     #if DEBUG
-    /// コーチング機能デモ用サンプルデータを追加
-    func addDebugSampleData() {
+    /// 全てのデータを削除（デバッグ用）
+    func clearAllData() {
+        let fetchDescriptor = FetchDescriptor<MoodEntry>()
+        
+        do {
+            let allEntries = try context.fetch(fetchDescriptor)
+            for entry in allEntries {
+                context.delete(entry)
+            }
+            try context.save()
+            updateWidgetData()
+            print("[DataController] All data cleared successfully")
+        } catch {
+            print("[DataController] Failed to clear data: \(error)")
+            context.rollback()
+        }
+    }
+    
+    /// 日本語スクリーンショット用サンプルデータを追加（既存データを削除してから）
+    func addJapaneseSampleData() {
+        clearAllData() // 既存データを削除
+        
         let calendar = Calendar.current
         let now = Date()
         
@@ -172,11 +192,82 @@ class DataController: ObservableObject {
         do {
             try context.save()
             updateWidgetData()
-            print("[DataController] Enhanced coaching demo sample data added successfully")
+            print("[DataController] Japanese sample data added successfully")
         } catch {
-            print("[DataController] Failed to save enhanced sample data: \(error)")
+            print("[DataController] Failed to save sample data: \(error)")
             context.rollback()
         }
+    }
+    
+    /// 英語スクリーンショット用サンプルデータを追加（既存データを削除してから）
+    func addEnglishSampleData() {
+        clearAllData() // 既存データを削除
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // English sample data for screenshots and personal coaching demo
+        let scenarios = [
+            // 1. Morning fatigue pattern (sleep quality issues)
+            (mood: Mood.tired, hour: 7, text: "Tired since morning. Stayed up late on my phone", days: [-1, -3, -5, -7]),
+            (mood: Mood.sleepy, hour: 8, text: "Couldn't sleep at all. Room was too hot", days: [-2, -4, -6]),
+            
+            // 2. Work stress pattern
+            (mood: Mood.angry, hour: 17, text: "Frustrated with work deadlines today", days: [-1, -2, -3]),
+            (mood: Mood.tired, hour: 19, text: "Too many meetings, feeling exhausted", days: [-4, -5]),
+            (mood: Mood.angry, hour: 18, text: "Overtime is stressing me out", days: [-6, -8]),
+            
+            // 3. Afternoon energy drop pattern
+            (mood: Mood.tired, hour: 14, text: "Strong sleepiness after lunch", days: [-1, -3, -5, -7, -9]),
+            (mood: Mood.sleepy, hour: 15, text: "Getting sleepy during afternoon meetings", days: [-2, -4, -6, -8]),
+            
+            // 4. Late night pattern
+            (mood: Mood.sleepy, hour: 23, text: "Late night but can't fall asleep", days: [-1, -2, -4, -6, -8]),
+            (mood: Mood.tired, hour: 0, text: "Stayed up late again", days: [-3, -5, -7]),
+            
+            // 5. Positive activities
+            (mood: Mood.happy, hour: 10, text: "Morning walk feels amazing", days: [-9, -10]),
+            (mood: Mood.happy, hour: 20, text: "Yoga session helped me relax", days: [-11]),
+            (mood: Mood.happy, hour: 19, text: "Great workout at the gym!", days: [-12]),
+            
+            // 6. Healthy lifestyle
+            (mood: Mood.normal, hour: 21, text: "Taking rest early tonight", days: [-10, -11, -13]),
+            (mood: Mood.happy, hour: 12, text: "Meditation calmed my mind", days: [-13, -14]),
+            
+            // 7. Mixed pattern (signs of improvement)
+            (mood: Mood.normal, hour: 9, text: "Feeling better with more sleep", days: [-9, -10, -11]),
+            (mood: Mood.happy, hour: 16, text: "Organizing work priorities helped", days: [-12, -13])
+        ]
+        
+        // Add sample data
+        for scenario in scenarios {
+            for day in scenario.days {
+                guard let date = calendar.date(byAdding: .day, value: day, to: now),
+                      let entryTime = calendar.date(bySettingHour: scenario.hour, minute: Int.random(in: 0...59), second: 0, of: date) else { continue }
+                
+                let entry = MoodEntry(
+                    mood: scenario.mood,
+                    text: scenario.text,
+                    timestamp: entryTime
+                )
+                
+                context.insert(entry)
+            }
+        }
+        
+        do {
+            try context.save()
+            updateWidgetData()
+            print("[DataController] English sample data added successfully")
+        } catch {
+            print("[DataController] Failed to save English sample data: \(error)")
+            context.rollback()
+        }
+    }
+    
+    /// レガシー関数（後方互換性のため）
+    func addDebugSampleData() {
+        addJapaneseSampleData()
     }
     
     /// 重み付きランダムで気分を選択
