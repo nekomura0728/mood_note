@@ -98,6 +98,9 @@ CLAUDE.md
 implementation_tasks.md
 prd.md
 
+# Allow docs folder for GitHub Pages
+!docs/
+
 # macOS
 .DS_Store
 .AppleDouble
