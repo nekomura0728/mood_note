@@ -1,0 +1,46 @@
+{
+  "identifier" : "2E8CF10E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "450.00",
+      "familyShareable" : false,
+      "internalID" : "com.moodjournal.app.pro",
+      "localizations" : [
+        {
+          "description" : "統計分析、CSVエクスポート、追加テーマなどのPro機能をご利用いただけます。",
+          "displayName" : "きぶん日記 Pro",
+          "locale" : "ja"
+        },
+        {
+          "description" : "Unlock statistics, CSV export, additional themes, and other Pro features.",
+          "displayName" : "Mood Journal Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.moodjournal.app.pro",
+      "referenceName" : "Pro Version",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "ja",
+    "_storefront" : "JPN",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
