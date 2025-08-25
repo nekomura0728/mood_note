@@ -20,7 +20,9 @@ class DataController: ObservableObject {
     
     /// イニシャライザー
     private init() {
+        #if DEBUG
         print("[DataController] Starting initialization...")
+        #endif
         
         do {
             let schema = Schema([
@@ -39,7 +41,9 @@ class DataController: ObservableObject {
             
             context = container.mainContext
             
+            #if DEBUG
             print("[DataController] ModelContainer created successfully")
+            #endif
             
             // 開発時用：初回起動時にサンプルデータを追加（デバッグビルドのみ）
             #if DEBUG
@@ -54,20 +58,28 @@ class DataController: ObservableObject {
             }
             #endif
             
+            #if DEBUG
             print("[DataController] Initialization completed")
+            #endif
             
         } catch {
+            #if DEBUG
             print("[DataController] Failed to create ModelContainer: \(error)")
             print("[DataController] Error details: \(error.localizedDescription)")
+            #endif
             
             // フォールバック：インメモリー設定を試す
             do {
+                #if DEBUG
                 print("[DataController] Attempting fallback to in-memory configuration...")
+                #endif
                 let schema = Schema([MoodEntry.self])
                 let fallbackConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
                 container = try ModelContainer(for: schema, configurations: [fallbackConfig])
                 context = container.mainContext
+                #if DEBUG
                 print("[DataController] Fallback initialization successful")
+                #endif
             } catch {
                 fatalError("Failed to create ModelContainer even with fallback: \(error)")
             }
@@ -357,7 +369,9 @@ class DataController: ObservableObject {
         do {
             return try context.fetch(descriptor)
         } catch {
+            #if DEBUG
             print("Failed to fetch entries for date: \(error)")
+            #endif
             return []
         }
     }
@@ -376,7 +390,9 @@ class DataController: ObservableObject {
         do {
             return try context.fetch(descriptor)
         } catch {
+            #if DEBUG
             print("Failed to fetch entries for date range: \(error)")
+            #endif
             return []
         }
     }
@@ -409,7 +425,9 @@ class DataController: ObservableObject {
         do {
             try save()
         } catch {
+            #if DEBUG
             print("[DataController] Failed to update entry: \(error)")
+            #endif
         }
     }
     
@@ -421,7 +439,9 @@ class DataController: ObservableObject {
         do {
             try save()
         } catch {
+            #if DEBUG
             print("[DataController] Failed to delete entry: \(error)")
+            #endif
         }
     }
     
@@ -431,7 +451,9 @@ class DataController: ObservableObject {
         do {
             try save()
         } catch {
+            #if DEBUG
             print("[DataController] Failed to delete entries: \(error)")
+            #endif
         }
     }
     
@@ -457,7 +479,9 @@ class DataController: ObservableObject {
     
     /// 直近7日間のムードを取得（ウィジェット用）
     func getRecentMoods(days: Int = 7) -> [Mood?] {
+        #if DEBUG
         print("[DataController] Fetching recent moods for \(days) days...")
+        #endif
         
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
@@ -468,15 +492,21 @@ class DataController: ObservableObject {
                 let latestEntry = fetchLatestEntry(for: date)
                 let mood = latestEntry?.moodEnum
                 moods.append(mood)
+                #if DEBUG
                 print("[DataController] Day -\(i): \(mood?.displayName ?? "なし")")
+                #endif
             } else {
                 moods.append(nil)
+                #if DEBUG
                 print("[DataController] Day -\(i): 日付計算エラー")
+                #endif
             }
         }
         
         let result = moods.reversed()
+        #if DEBUG
         print("[DataController] Recent moods result: \(result.count) items")
+        #endif
         return Array(result)
     }
     
@@ -484,7 +514,9 @@ class DataController: ObservableObject {
     
     /// ウィジェット用のデータを更新
     private func updateWidgetData() {
+        #if DEBUG
         print("[DataController] Updating widget data...")
+        #endif
         
         do {
             // 今日の最新データを更新
@@ -494,9 +526,13 @@ class DataController: ObservableObject {
                     mood,
                     text: todayLatest.text
                 )
+                #if DEBUG
                 print("[DataController] Updated today's mood: \(mood.displayName)")
+                #endif
             } else {
+                #if DEBUG
                 print("[DataController] No mood entry found for today")
+                #endif
             }
             
             // 直近7日間のデータを更新 - 安全な方式で
@@ -511,7 +547,9 @@ class DataController: ObservableObject {
                 }
             }
             
+            #if DEBUG
             print("[DataController] Converted recent moods to safe strings: \(safeMoodStrings)")
+            #endif
             
             // 安全な配列として保存
             SharedDataManager.shared.saveRecentMoodsSafe(safeMoodStrings)
@@ -520,11 +558,15 @@ class DataController: ObservableObject {
             #if canImport(WidgetKit)
             DispatchQueue.global(qos: .utility).async {
                 WidgetCenter.shared.reloadAllTimelines()
+                #if DEBUG
                 print("[DataController] Widget timelines reloaded")
+                #endif
             }
             #endif
         } catch {
+            #if DEBUG
             print("[DataController] Failed to update widget data: \(error)")
+            #endif
         }
     }
     
@@ -534,10 +576,14 @@ class DataController: ObservableObject {
     private func save() throws {
         do {
             try context.save()
+            #if DEBUG
             print("[DataController] Successfully saved data")
+            #endif
         } catch {
+            #if DEBUG
             print("[DataController] Failed to save context: \(error)")
             print("[DataController] Error details: \(error.localizedDescription)")
+            #endif
             
             // コンテキストをロールバック
             context.rollback()

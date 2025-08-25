@@ -34,7 +34,9 @@ class NotificationManager: ObservableObject {
                 saveSettings()
             }
         } catch {
+            #if DEBUG
             print("通知許可リクエストエラー: \(error)")
+            #endif
         }
     }
     
@@ -83,9 +85,13 @@ class NotificationManager: ObservableObject {
         // 通知をスケジュール
         center.add(request) { error in
             if let error = error {
+                #if DEBUG
                 print("通知スケジュールエラー: \(error)")
+                #endif
             } else {
+                #if DEBUG
                 print("通知がスケジュールされました: \(components.hour!):\(String(format: "%02d", components.minute!))")
+                #endif
             }
         }
     }
@@ -93,7 +99,9 @@ class NotificationManager: ObservableObject {
     /// 通知をキャンセル
     func cancelNotification() {
         center.removePendingNotificationRequests(withIdentifiers: [notificationIdentifier])
+        #if DEBUG
         print("通知がキャンセルされました")
+        #endif
     }
     
     // MARK: - Settings Management
@@ -165,6 +173,7 @@ class NotificationManager: ObservableObject {
     
     /// pending通知を確認（デバッグ用）
     func checkPendingNotifications() {
+        #if DEBUG
         center.getPendingNotificationRequests { requests in
             print("Pending notifications: \(requests.count)")
             for request in requests {
@@ -174,5 +183,6 @@ class NotificationManager: ObservableObject {
                 }
             }
         }
+        #endif
     }
 }

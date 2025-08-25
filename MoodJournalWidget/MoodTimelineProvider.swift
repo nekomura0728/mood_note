@@ -16,7 +16,9 @@ struct MoodTimelineProvider: TimelineProvider {
     
     /// プレースホルダーエントリー
     func placeholder(in context: Context) -> MoodTimelineEntry {
+        #if DEBUG
         print("[Widget] Creating placeholder entry")
+        #endif
         
         let entry = MoodTimelineEntry(
             date: Date(),
@@ -26,18 +28,26 @@ struct MoodTimelineProvider: TimelineProvider {
             recentMoods: [Mood.happy, Mood.normal, Mood.tired, Mood.angry, Mood.sleepy, Mood.happy, Mood.normal]
         )
         
+        #if DEBUG
         print("[Widget] Placeholder entry created successfully")
+        #endif
         return entry
     }
     
     /// スナップショット（ウィジェットギャラリー用）
     func getSnapshot(in context: Context, completion: @escaping (MoodTimelineEntry) -> Void) {
+        #if DEBUG
         print("[Widget] Getting snapshot for context: \(context)")
+        #endif
         
         let entry = placeholder(in: context)
+        #if DEBUG
         print("[Widget] Snapshot entry created, calling completion")
+        #endif
         completion(entry)
+        #if DEBUG
         print("[Widget] Snapshot completion called successfully")
+        #endif
     }
     
     /// タイムライン生成
@@ -56,7 +66,9 @@ struct MoodTimelineProvider: TimelineProvider {
         todayData = manager.getTodayMood()
         recentMoods = manager.getRecentMoods()
         
+        #if DEBUG
         print("[Widget] Successfully retrieved data - Today: \(todayData.mood?.rawValue ?? "nil"), Recent: \(recentMoods.count) items")
+        #endif
         
         // エントリーを作成（防御的プログラミング）
         let entry = MoodTimelineEntry(
@@ -66,7 +78,9 @@ struct MoodTimelineProvider: TimelineProvider {
             timestamp: todayData.timestamp,
             recentMoods: recentMoods.count > 7 ? Array(recentMoods.prefix(7)) : recentMoods
         )
+        #if DEBUG
         print("[Widget] Timeline entry created successfully")
+        #endif
         
         // 次の更新時刻を安全に計算
         let calendar = Calendar.current
@@ -90,7 +104,9 @@ struct MoodTimelineProvider: TimelineProvider {
             entries: [entry],
             policy: .after(nextUpdateDate)
         )
+        #if DEBUG
         print("[Widget] Timeline created successfully, next update: \(nextUpdateDate)")
+        #endif
         
         // 完了ハンドラーを安全に呼び出し
         DispatchQueue.main.async {

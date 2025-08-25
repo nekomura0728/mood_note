@@ -64,7 +64,9 @@ class StoreKitManager: ObservableObject {
                 self.proVersionProduct = product
             }
         } catch {
+            #if DEBUG
             print("商品情報の取得に失敗: \(error)")
+            #endif
             self.errorMessage = "商品情報を取得できませんでした"
         }
     }
@@ -138,7 +140,9 @@ class StoreKitManager: ObservableObject {
                     break
                 }
             } catch {
+                #if DEBUG
                 print("トランザクションの確認エラー: \(error)")
+                #endif
             }
         }
         
@@ -166,7 +170,9 @@ class StoreKitManager: ObservableObject {
                     
                     await transaction.finish()
                 } catch {
+                    #if DEBUG
                     print("トランザクション更新エラー: \(error)")
+                    #endif
                 }
             }
         }
@@ -238,7 +244,9 @@ class ProManager: ObservableObject {
         UserDefaults.standard.set(true, forKey: "is_pro_user")
         UserDefaults.standard.set(Date(), forKey: "pro_purchase_date")
         
+        #if DEBUG
         print("[ProManager] Pro features unlocked!")
+        #endif
         
         // オブジェクトの更新を通知
         objectWillChange.send()

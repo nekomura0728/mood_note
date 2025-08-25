@@ -24,7 +24,9 @@ class ProManager: ObservableObject {
         UserDefaults.standard.set(true, forKey: "is_pro_user")
         UserDefaults.standard.set(Date(), forKey: "pro_purchase_date")
         
+        #if DEBUG
         print("[ProManager] Pro features unlocked!")
+        #endif
         
         // オブジェクトの更新を通知
         objectWillChange.send()

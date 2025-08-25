@@ -223,11 +223,15 @@ struct RecordView: View {
     
     private func saveEntry() {
         guard let mood = selectedMood else {
+            #if DEBUG
             print("[RecordView] No mood selected")
+            #endif
             return
         }
         
+        #if DEBUG
         print("[RecordView] Saving entry with mood: \(mood.displayName)")
+        #endif
         
         let text = moodText.trimmingCharacters(in: .whitespacesAndNewlines)
         let finalText = text.isEmpty ? nil : text
@@ -240,7 +244,9 @@ struct RecordView: View {
             showSuccess = true
         }
         
+        #if DEBUG
         print("[RecordView] Entry saved successfully")
+        #endif
         
         // 2秒後にリセット
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

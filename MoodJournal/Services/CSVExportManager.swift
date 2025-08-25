@@ -99,7 +99,9 @@ class CSVExportManager {
             try content.write(to: fileURL, atomically: true, encoding: .utf8)
             return fileURL
         } catch {
+            #if DEBUG
             print("CSV保存エラー: \(error)")
+            #endif
             return nil
         }
     }

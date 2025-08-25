@@ -9,7 +9,9 @@ class SharedDataManager {
     
     private init() {
         let suiteName = "group.com.moodjournal.data"
+        #if DEBUG
         print("[SharedDataManager] Initializing with suite name: \(suiteName)")
+        #endif
         
         // より安全な UserDefaults 初期化
         var userDefaults: UserDefaults? = nil
@@ -22,13 +24,19 @@ class SharedDataManager {
             do {
                 if let appGroupDefaults = UserDefaults(suiteName: suiteName) {
                     userDefaults = appGroupDefaults
+                    #if DEBUG
                     print("[SharedDataManager] Successfully created UserDefaults with App Group (attempt \(attempts))")
+                    #endif
                 } else {
+                    #if DEBUG
                     print("[SharedDataManager] Failed to create App Group UserDefaults (attempt \(attempts))")
+                    #endif
                     Thread.sleep(forTimeInterval: 0.1) // 短い待機
                 }
             } catch {
+                #if DEBUG
                 print("[SharedDataManager] Exception creating UserDefaults (attempt \(attempts)): \(error)")
+                #endif
             }
         }
         
@@ -44,19 +52,27 @@ class SharedDataManager {
                 finalDefaults.synchronize() // 強制同期
                 
                 if finalDefaults.string(forKey: testKey) == testValue {
+                    #if DEBUG
                     print("[SharedDataManager] App Group UserDefaults working correctly")
+                    #endif
                     finalDefaults.removeObject(forKey: testKey)
                     finalDefaults.synchronize()
                 } else {
+                    #if DEBUG
                     print("[SharedDataManager] Warning: App Group UserDefaults test failed")
+                    #endif
                 }
             } catch {
+                #if DEBUG
                 print("[SharedDataManager] Error during UserDefaults test: \(error)")
+                #endif
             }
             
         } else {
+            #if DEBUG
             print("[SharedDataManager] Critical Error: Failed to create UserDefaults with suite after \(maxAttempts) attempts")
             print("[SharedDataManager] Falling back to standard UserDefaults")
+            #endif
             self.userDefaults = UserDefaults.standard
         }
         
@@ -91,14 +107,18 @@ class SharedDataManager {
         guard let moodRawValue = userDefaults.string(forKey: Keys.todayMood),
               !moodRawValue.isEmpty,
               let mood = Mood(rawValue: moodRawValue) else {
+            #if DEBUG
             print("[SharedDataManager] No valid mood found for today")
+            #endif
             return (nil, nil, nil)
         }
         
         let text = userDefaults.string(forKey: Keys.todayText)
         let timestamp = userDefaults.object(forKey: Keys.todayTimestamp) as? Date
         
+        #if DEBUG
         print("[SharedDataManager] Retrieved today's mood: \(mood.rawValue)")
+        #endif
         return (mood, text, timestamp)
     }
     
@@ -115,7 +135,9 @@ class SharedDataManager {
     
     /// 直近の気分データを保存（ウィジェット用）
     func saveRecentMoods(_ moods: [String?]) {
+        #if DEBUG
         print("[SharedDataManager] Saving \(moods.count) recent moods...")
+        #endif
         
         // 最新7日分に制限
         let limitedMoods = Array(moods.suffix(7))
@@ -132,18 +154,24 @@ class SharedDataManager {
         // 追加の安全チェック：配列が空でないことを確認
         let finalMoods = safeMoods.isEmpty ? ["__EMPTY__"] : safeMoods
         
+        #if DEBUG
         print("[SharedDataManager] About to save moods: \(finalMoods)")
+        #endif
         
         // UserDefaults に保存（nil要素が完全に除去された状態）
         userDefaults.set(finalMoods, forKey: Keys.recentMoods)
         userDefaults.set(Date(), forKey: Keys.lastUpdateTime)
         
+        #if DEBUG
         print("[SharedDataManager] Successfully saved recent moods: \(finalMoods)")
+        #endif
     }
 
     /// 安全な気分データ保存（nil を含まない文字列配列）
     func saveRecentMoodsSafe(_ moods: [String]) {
+        #if DEBUG
         print("[SharedDataManager] Saving \(moods.count) recent moods (safe version)...")
+        #endif
         
         // 最新7日分に制限
         let limitedMoods = Array(moods.suffix(7))
@@ -152,13 +180,17 @@ class SharedDataManager {
         userDefaults.set(limitedMoods, forKey: Keys.recentMoods)
         userDefaults.set(Date(), forKey: Keys.lastUpdateTime)
         
+        #if DEBUG
         print("[SharedDataManager] Successfully saved safe recent moods: \(limitedMoods)")
+        #endif
     }
     
     /// 直近の気分データを取得
     func getRecentMoods() -> [Mood?] {
         guard let moodStrings = userDefaults.array(forKey: Keys.recentMoods) as? [String] else {
+            #if DEBUG
             print("[SharedDataManager] No recent moods found")
+            #endif
             return []
         }
         
@@ -170,7 +202,9 @@ class SharedDataManager {
             return Mood(rawValue: moodString)
         }
         
+        #if DEBUG
         print("[SharedDataManager] Retrieved \(moods.count) recent moods")
+        #endif
         return moods
     }
     
@@ -193,41 +227,57 @@ class SharedDataManager {
     
     /// 破損したデータのクリーンアップ（初期化時に実行）
     private func cleanupCorruptedData() {
+        #if DEBUG
         print("[SharedDataManager] Performing cleanup of corrupted data...")
+        #endif
         
         do {
             // 既存の recent_moods をチェックして、問題があれば削除
             if let existingMoods = userDefaults.array(forKey: Keys.recentMoods) {
+                #if DEBUG
                 print("[SharedDataManager] Found existing recent moods data: \(existingMoods)")
+                #endif
                 
                 // 配列に問題がないかチェック
                 var hasProblems = false
                 
                 for (index, element) in existingMoods.enumerated() {
                     if element is NSNull {
+                        #if DEBUG
                         print("[SharedDataManager] Found NSNull at index \(index)")
+                        #endif
                         hasProblems = true
                         break
                     }
                     
                     // 文字列でない要素があるかチェック
                     if !(element is String) {
+                        #if DEBUG
                         print("[SharedDataManager] Found non-string element at index \(index): \(type(of: element))")
+                        #endif
                         hasProblems = true
                         break
                     }
                 }
                 
                 if hasProblems {
+                    #if DEBUG
                     print("[SharedDataManager] Found corrupted recent moods data, clearing...")
+                    #endif
                     userDefaults.removeObject(forKey: Keys.recentMoods)
                     userDefaults.synchronize()
+                    #if DEBUG
                     print("[SharedDataManager] Corrupted data cleared successfully")
+                    #endif
                 } else {
+                    #if DEBUG
                     print("[SharedDataManager] Recent moods data is clean")
+                    #endif
                 }
             } else {
+                #if DEBUG
                 print("[SharedDataManager] No existing recent moods data found")
+                #endif
             }
             
             // その他のキーもチェック
@@ -236,17 +286,23 @@ class SharedDataManager {
             for key in allKeys {
                 if let value = userDefaults.object(forKey: key) {
                     if value is NSNull {
+                        #if DEBUG
                         print("[SharedDataManager] Found NSNull for key \(key), removing...")
+                        #endif
                         userDefaults.removeObject(forKey: key)
                     }
                 }
             }
             
             userDefaults.synchronize()
+            #if DEBUG
             print("[SharedDataManager] Cleanup completed successfully")
+            #endif
             
         } catch {
+            #if DEBUG
             print("[SharedDataManager] Error during cleanup: \(error)")
+            #endif
         }
     }
 }
